@@ -1,4 +1,4 @@
-﻿# Vista Care
+# Vista Care
 
 A Flutter owner dashboard for a six-branch clinic network: Laguna, Pasig,
 Caloocan, Parañaque, Quezon City, and Valenzuela.
@@ -29,7 +29,7 @@ To use the actual emulator or browser dimensions instead:
 flutter run --dart-define=DEVICE_PREVIEW=false
 ```
 
-Preview is disabled in profile and release builds. This simulates iPhone
+Preview is disabled in release builds and in ordinary profile builds. This simulates iPhone
 layout and Flutter platform behavior; it does not run iOS or test native iOS
 plugins. See the [Device Preview documentation](https://pub.dev/packages/device_preview).
 
@@ -70,4 +70,33 @@ branch synchronization, access controls, audit records, and notification deliver
 flutter analyze
 flutter test
 flutter build web --release
+```
+
+## GitHub Pages demo
+
+The iPhone layout preview is published at:
+
+https://elijahdelmundo.github.io/veritas_prototype-0.1/
+
+The workflow in `.github/workflows/pages.yml` analyzes, tests, builds, and deploys
+on pushes to `main`. In repository **Settings > Pages**, use **GitHub Actions**
+as the source. Deployments appear under **Actions > Deploy Flutter preview to
+GitHub Pages** and can also be started with **Run workflow**.
+
+The hosted demo deliberately uses a profile web build with
+`--dart-define=HOSTED_PREVIEW=true` so Device Preview can show its iPhone 16
+frame. Device Preview 3 disables simulation in release builds. The hosted
+preview does not include a live Flutter DevTools device selector and is not
+an actual iOS simulator. All data remains illustrative and resets on reload.
+
+To reproduce the hosted build:
+
+```sh
+flutter build web --profile --dart-define=HOSTED_PREVIEW=true --base-href /veritas_prototype-0.1/
+```
+
+For a normal production web build without the simulated device:
+
+```sh
+flutter build web --release --base-href /veritas_prototype-0.1/
 ```

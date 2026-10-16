@@ -13,7 +13,12 @@ Future<void> main() async {
     'DEVICE_PREVIEW',
     defaultValue: true,
   );
-  DevicePreview.enable(enabled: kDebugMode && previewEnabled);
+  const hostedPreview = bool.fromEnvironment('HOSTED_PREVIEW');
+  DevicePreview.enable(
+    enabled:
+        previewEnabled &&
+        (kDebugMode || (kIsWeb && kProfileMode && hostedPreview)),
+  );
   await DevicePreview.maybeController?.applyPreset(DevicePresets.iPhone16);
   runApp(const MyApp());
 }
