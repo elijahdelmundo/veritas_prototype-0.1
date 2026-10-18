@@ -18,7 +18,7 @@ Related documents: [Architecture](ARCHITECTURE.md) · [Design system](DESIGNSYST
 | Intended reach | Six branches with Pasig as the proposed central administration hub |
 | Branches | Laguna, Pasig, Caloocan, Parañaque, Quezon City, Valenzuela |
 | Current platform | Flutter application with Android and Chrome development usage |
-| Current storage | In-memory sample data, recreated on restart |
+| Current storage | Laravel REST API with persistent local SQLite; explicit demo mode remains in-memory |
 
 The product should give management one place to compare visits, collections, expenses, reports, and medicine inventory. The broader vision includes controlled patient records, billing, doctor attendance, scheduling, and auditability.
 
@@ -83,11 +83,11 @@ Owner visibility of operational data does not automatically grant unrestricted a
 
 Batch units are vials, tablets, capsules, bottles, or boxes. The batch date picker accepts today through approximately ten years ahead. Different expiry deliveries should use separate batches.
 
-Daily reports currently contain patient count, gross revenue, operating expenses, and notes. The “Submitted” label is a local display state; it is not evidence of manager approval, server receipt, or a recorded submission time.
+Daily reports currently contain patient count, gross revenue, operating expenses, and notes. The “Submitted” label is a stored report display state; it is not evidence of manager approval or a formal submission workflow. API saves now wait for server confirmation.
 
 ## 05 · Planned functional requirements
 
-These preserve the original workflow's intended scope.
+These preserve the original workflow's intended scope. P03 is partially implemented locally; production identity, policies, conflict handling, and deployment remain open.
 
 | ID | Priority | Requirement and acceptance condition |
 |---|---|---|
@@ -115,7 +115,7 @@ P13 expands the report to include services, refunds, inventory movements, low-st
 | Area | Requirement / current limitation |
 |---|---|
 | Access control | Must be enforced by the server; current branch selectors are display filters |
-| Durability | Production saves must survive restart and be visible to authorized clients; current data does neither |
+| Durability | Local API saves survive restart and can be refreshed by clients of the same server; production authorization/deployment remain planned |
 | Correctness | Avoid duplicate branch/date reports; define precision, conflict, and correction rules |
 | Privacy | Minimize exposed fields and segregate clinical and billing access |
 | Auditability | Record actor, action, scope, time, result, and meaningful change context |
@@ -175,4 +175,9 @@ No delivery dates or backend vendors have been committed.
 - Validate that sample staff ratings, addresses, growth figures, and medicine quantities are replaced or clearly labeled in every demonstration.
 - Require human review of discrepancies and conflicts; do not infer misconduct from an alert.
 
-Existing automated coverage is in [store tests](test/clinic_store_test.dart) and [widget tests](test/widget_test.dart). Scope changes must update the architecture, workflow, and design documents alongside this PRD.
+Existing automated coverage is in [store tests](frontend/test/clinic_store_test.dart) and [widget tests](frontend/test/widget_test.dart). Scope changes must update the architecture, workflow, and design documents alongside this PRD.
+
+
+## REST integration update - 18 October 2026
+
+Flutter now uses Laravel REST requests by default. Branches, daily reports, and medicine batches are stored in SQLite. Confirmed saves persist; errors preserve forms; refresh reloads server state. Explicit USE_DEMO_DATA=true builds remain in-memory, including GitHub Pages. Production login, permissions, audit history, approvals, and hosted API deployment remain planned.

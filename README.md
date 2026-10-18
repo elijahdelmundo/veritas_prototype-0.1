@@ -1,102 +1,187 @@
-# Vista Care
+# Veritas Prototype 0.1
 
-A Flutter owner dashboard for a six-branch clinic network: Laguna, Pasig,
-Caloocan, Parañaque, Quezon City, and Valenzuela.
+Vista Care is a six-branch clinic dashboard with a **Flutter frontend and
+Laravel 12 REST API**. Laravel stores local data in SQLite; Flutter displays
+reports, inventory, branches, and calculated summaries.
 
-## Run
+## Layout
 
-```sh
+```text
+frontend/        Flutter UI, HTTP client, models, tests, platform projects
+backend/         Laravel API, models, migrations, seeders, tests
+scripts/         Windows helpers for XAMPP PHP and Composer
+.vscode/         Flutter launch configurations
+.github/         Flutter/Laravel CI and GitHub Pages workflow
+```
+
+Keep the repository root open in VS Code. Run Flutter commands from
+`frontend`; run the Windows helpers from the root.
+
+## 1. Start Laravel
+
+The installed setup uses XAMPP PHP 8.2 and Laravel 12. Helpers locate PHP on
+PATH or fall back to `C:\xampp\php\php.exe`, and enable the installed ZIP
+extension for Composer when needed without editing global PHP settings.
+
+For this installed project, run:
+
+```powershell
+.\scripts\artisan.cmd migrate
+.\scripts\artisan.cmd db:seed --class=ClinicDemoSeeder
+.\scripts\artisan.cmd serve --host=127.0.0.1 --port=8000
+```
+
+Seeding creates six sample branches, 180 reports, and 36 batches. Rerunning
+the seeder preserves existing report and quantity edits.
+
+Useful URLs:
+
+- http://127.0.0.1:8000/ — Laravel welcome page.
+- http://127.0.0.1:8000/up — framework health.
+- http://127.0.0.1:8000/api/v1/branches — REST branch data.
+- http://127.0.0.1:8000/api/v1/reports — stored daily reports.
+- http://127.0.0.1:8000/api/v1/medicine-batches — stored inventory.
+
+## 2. Start Flutter
+
+In another terminal:
+
+```powershell
+cd frontend
 flutter pub get
-flutter run
+flutter run -d chrome
 ```
 
-Use `flutter run -d chrome` for a browser preview.
+This now connects to Laravel by default. Report and inventory edits persist
+in the database across app restarts. Failed connections show Retry; failed
+saves preserve form input.
 
-## iPhone screen preview
+For the full browser layout:
 
-Debug builds start with Device Preview's iPhone 16 preset, including its
-screen size, safe areas, and device frame. Run `flutter run -d chrome` to
-view it in a browser, or run on the Android emulator as usual.
-
-Open Flutter DevTools from VS Code with **Dart: Open DevTools**, then select
-the **device_preview** extension to change devices, rotate the screen, or
-adjust text size and appearance. Device Preview 3 uses DevTools rather than
-an in-app device selector.
-
-To use the actual emulator or browser dimensions instead:
-
-```sh
-flutter run --dart-define=DEVICE_PREVIEW=false
+```powershell
+flutter run -d chrome --dart-define=DEVICE_PREVIEW=false
 ```
 
-Preview is disabled in release builds and in ordinary profile builds. This simulates iPhone
-layout and Flutter platform behavior; it does not run iOS or test native iOS
-plugins. See the [Device Preview documentation](https://pub.dev/packages/device_preview).
+Default API URLs:
 
-## Included
+| Client | URL |
+|---|---|
+| Chrome / desktop / iOS simulator | http://127.0.0.1:8000/api/v1 |
+| Android emulator | http://10.0.2.2:8000/api/v1 |
 
-- Five phone tabs: Home, Daily reports, Statistics, Revenue, and Branches.
-- Responsive desktop navigation and branch filtering across the dashboard.
-- Branch profiles with patient trends, daily revenue targets, inventory, and staff ratings.
-- Medicine batch entry with quantity, units, branch, expiry date, and low-stock threshold.
-- Restocking and quantity corrections, low-stock alerts, and expiry alerts within 60 days.
-- Daily report entry and editing, date selection, patient counts, collections, expenses, and notes.
-- Seven-day and thirty-day patient and revenue summaries, plus net revenue and margin.
+Override for another server:
 
-## Demo data and storage
+```powershell
+flutter run -d chrome --dart-define=API_BASE_URL=http://127.0.0.1:8000/api/v1
+```
 
-This is an interactive UI prototype. All clinic totals, staff reviews, branch
-addresses, and medicine batches are illustrative sample data. Thirty days of
-reports are generated on launch. Dates use Philippine time (UTC+8).
+A physical phone or another computer needs a reachable development host
+address; its localhost is not your computer. Intentional LAN testing also
+requires a server bind such as `--host=0.0.0.0`, network/firewall access, and
+an appropriate browser-origin policy. Native iOS still needs device testing.
 
-Changes are stored in memory and reset on app restart. Saving a daily report
-replaces the existing report for the same branch and date. Restocking adds to
-the selected batch; deliveries with a different expiry should be added as a
-new batch. Inventory alerts are displayed inside the app.
+## 3. Try persistence
 
-Production use still requires authentication, a persistent database, shared
-branch synchronization, access controls, audit records, and notification delivery.
+1. Open Daily reports, edit today's Pasig report, and save.
+2. Reload Flutter: the edited report is fetched from Laravel.
+3. Open inventory and restock a batch or set its on-hand quantity.
+4. Reload again: the quantity and expiry are retained.
+5. Use the header refresh action to fetch another client's committed changes.
 
-## Structure
+This is request/response synchronization, not live push updates.
+Users must connect to the same backend to share data. Separate local
+SQLite files on groupmates' computers remain separate databases.
 
-- `lib/main.dart`: app entry and theme.
-- `lib/pages/`: navigation shell and individual screens.
-- `lib/data/clinic_store.dart`: shared state, sample data, and aggregation.
-- `lib/widgets/clinic_ui.dart`: reusable cards, charts, selectors, and design colors.
+## Explicit offline/design demo
 
-## Verify
+To view the design without running Laravel:
+
+```powershell
+cd frontend
+flutter run -d chrome --dart-define=USE_DEMO_DATA=true
+```
+
+Only this explicit mode creates in-memory sample data and resets on reload.
+A connection failure in API mode never silently switches to demo mode.
+
+Device Preview starts with iPhone 16 in debug. Open **Dart: Open DevTools**
+and the **device_preview** extension to change devices. It is a layout
+simulation, not an actual iOS runtime.
+
+## Fresh clone setup
+
+Install Flutter, PHP compatible with Laravel 12, and Composer. With PHP and
+Composer on PATH, run this from the root:
+
+```powershell
+cd backend
+composer install
+Copy-Item .env.example .env
+php artisan key:generate
+if (-not (Test-Path database/database.sqlite)) { New-Item -ItemType File database/database.sqlite }
+php artisan migrate
+php artisan db:seed --class=ClinicDemoSeeder
+php artisan serve --host=127.0.0.1 --port=8000
+```
+
+Do not overwrite an existing `.env` or regenerate an existing application
+key when following fresh-clone instructions. On this XAMPP computer the
+root helpers can replace `php artisan` and `composer` commands.
+
+Local `backend/.env`, application keys, SQLite data, `vendor`, and frontend
+build/caches are ignored. Commit migrations, `.env.example`, source, and
+lockfiles. No Node build is needed for the current API.
+
+## Database and access boundary
+
+SQLite is the exercised local database. XAMPP MySQL can be configured later
+by creating a database, changing Laravel's `DB_*` environment values, and
+running migrations; it has not been verified by this integration.
+
+The prototype API is enabled only in Laravel local/testing environments.
+It has no login, user/branch authorization, medical records, approval
+workflow, or audit log yet. CORS accepts browser origins on localhost and
+127.0.0.1; it is not an authentication mechanism.
+
+Use sample data locally. Before public multiuser deployment, implement
+identity, server-enforced permissions, HTTPS, and the required audit rules.
+
+## Verification
+
+From `frontend`:
 
 ```sh
 flutter analyze
 flutter test
-flutter build web --release
 ```
 
-## GitHub Pages demo
+From the root:
 
-The iPhone layout preview is published at:
+```powershell
+.\scripts\composer.cmd validate --strict
+.\scripts\composer.cmd check-platform-reqs
+.\scripts\artisan.cmd test
+```
+
+## GitHub Pages
 
 https://elijahdelmundo.github.io/veritas_prototype-0.1/
 
-The workflow in `.github/workflows/pages.yml` analyzes, tests, builds, and deploys
-on pushes to `main`. In repository **Settings > Pages**, use **GitHub Actions**
-as the source. Deployments appear under **Actions > Deploy Flutter preview to
-GitHub Pages** and can also be started with **Run workflow**.
-
-The hosted demo deliberately uses a profile web build with
-`--dart-define=HOSTED_PREVIEW=true` so Device Preview can show its iPhone 16
-frame. Device Preview 3 disables simulation in release builds. The hosted
-preview does not include a live Flutter DevTools device selector and is not
-an actual iOS simulator. All data remains illustrative and resets on reload.
-
-To reproduce the hosted build:
+Pages hosts only the Flutter frontend and cannot execute Laravel.
+The workflow builds from `frontend` with explicit demo mode:
 
 ```sh
-flutter build web --profile --dart-define=HOSTED_PREVIEW=true --base-href /veritas_prototype-0.1/
+flutter build web --profile --dart-define=HOSTED_PREVIEW=true --dart-define=USE_DEMO_DATA=true --base-href /veritas_prototype-0.1/
 ```
 
-For a normal production web build without the simulated device:
+The hosted iPhone design demo resets on reload and does not connect to a
+visitor's localhost. A real shared API requires separate PHP-capable
+hosting and a deployed frontend configured with its HTTPS API URL.
 
-```sh
-flutter build web --release --base-href /veritas_prototype-0.1/
-```
+## Documentation
+
+- [Architecture](ARCHITECTURE.md): components, schema, REST contract, deployment boundaries.
+- [Workflow](WORKFLOW.md): connected report/inventory journeys and planned clinic operations.
+- [Design system](DESIGNSYSTEM.md): visual tokens, components, responsiveness, motion.
+- [PRD](PRD.md): product scope and future requirements.
+- [Backend](backend/README.md): Laravel-specific setup.

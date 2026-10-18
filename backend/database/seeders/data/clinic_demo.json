@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Laguna",
+    "address": "Santa Rosa, Laguna",
+    "target": 45000,
+    "growth": 12.4,
+    "staff": [
+      {
+        "name": "Dr. Sofia Reyes",
+        "role": "Branch physician",
+        "rating": 4.9,
+        "reviews": 128
+      },
+      {
+        "name": "Anna Garcia",
+        "role": "Head nurse",
+        "rating": 4.8,
+        "reviews": 96
+      }
+    ]
+  },
+  {
+    "name": "Pasig",
+    "address": "Ortigas Center, Pasig",
+    "target": 50000,
+    "growth": 18.2,
+    "staff": [
+      {
+        "name": "Dr. Miguel Santos",
+        "role": "Branch physician",
+        "rating": 4.9,
+        "reviews": 156
+      },
+      {
+        "name": "Maria Cruz",
+        "role": "Head nurse",
+        "rating": 4.9,
+        "reviews": 112
+      }
+    ]
+  },
+  {
+    "name": "Caloocan",
+    "address": "Grace Park, Caloocan",
+    "target": 40000,
+    "growth": 8.7,
+    "staff": [
+      {
+        "name": "Dr. Isabel Lim",
+        "role": "Branch physician",
+        "rating": 4.8,
+        "reviews": 104
+      },
+      {
+        "name": "Paolo Ramos",
+        "role": "Head nurse",
+        "rating": 4.7,
+        "reviews": 82
+      }
+    ]
+  },
+  {
+    "name": "Parañaque",
+    "address": "BF Homes, Parañaque",
+    "target": 45000,
+    "growth": 14.6,
+    "staff": [
+      {
+        "name": "Dr. Lucas Tan",
+        "role": "Branch physician",
+        "rating": 4.9,
+        "reviews": 119
+      },
+      {
+        "name": "Ella Flores",
+        "role": "Head nurse",
+        "rating": 4.8,
+        "reviews": 91
+      }
+    ]
+  },
+  {
+    "name": "Quezon City",
+    "address": "Diliman, Quezon City",
+    "target": 55000,
+    "growth": 21.3,
+    "staff": [
+      {
+        "name": "Dr. Andrea Torres",
+        "role": "Branch physician",
+        "rating": 5,
+        "reviews": 142
+      },
+      {
+        "name": "Carlo Mendoza",
+        "role": "Head nurse",
+        "rating": 4.9,
+        "reviews": 103
+      }
+    ]
+  },
+  {
+    "name": "Valenzuela",
+    "address": "Marulas, Valenzuela",
+    "target": 40000,
+    "growth": 9.8,
+    "staff": [
+      {
+        "name": "Dr. Rafael Dela Cruz",
+        "role": "Branch physician",
+        "rating": 4.8,
+        "reviews": 98
+      },
+      {
+        "name": "Nina Bautista",
+        "role": "Head nurse",
+        "rating": 4.8,
+        "reviews": 77
+      }
+    ]
+  }
+]

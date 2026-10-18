@@ -1,0 +1,42 @@
+{
+    "version":  "0.2.0",
+    "configurations":  [
+                           {
+                               "name":  "Flutter: iPhone preview (Chrome)",
+                               "request":  "launch",
+                               "type":  "dart",
+                               "cwd":  "${workspaceFolder}/frontend",
+                               "program":  "${workspaceFolder}/frontend/lib/main.dart",
+                               "deviceId":  "chrome"
+                           },
+                           {
+                               "name":  "Flutter: full website (Chrome)",
+                               "request":  "launch",
+                               "type":  "dart",
+                               "cwd":  "${workspaceFolder}/frontend",
+                               "program":  "${workspaceFolder}/frontend/lib/main.dart",
+                               "deviceId":  "chrome",
+                               "toolArgs":  [
+                                                "--dart-define=DEVICE_PREVIEW=false"
+                                            ]
+                           },
+                           {
+                               "name":  "Flutter: selected device",
+                               "request":  "launch",
+                               "type":  "dart",
+                               "cwd":  "${workspaceFolder}/frontend",
+                               "program":  "${workspaceFolder}/frontend/lib/main.dart"
+                           },
+                           {
+                               "name":  "Flutter: sample demo without API",
+                               "request":  "launch",
+                               "type":  "dart",
+                               "cwd":  "${workspaceFolder}/frontend",
+                               "program":  "${workspaceFolder}/frontend/lib/main.dart",
+                               "deviceId":  "chrome",
+                               "toolArgs":  [
+                                                "--dart-define=USE_DEMO_DATA=true"
+                                            ]
+                           }
+                       ]
+}

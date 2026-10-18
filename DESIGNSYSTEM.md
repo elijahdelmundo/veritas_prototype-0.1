@@ -22,7 +22,7 @@ The supplied design-system image informs this document's structure. Its pink pal
 
 ## 02 · Color palette
 
-Source of truth: `AppColors` in [clinic_ui.dart](lib/widgets/clinic_ui.dart) and the theme in [main.dart](lib/main.dart).
+Source of truth: `AppColors` in [clinic_ui.dart](frontend/lib/widgets/clinic_ui.dart) and the theme in [main.dart](frontend/lib/main.dart).
 
 | Token | Hex | Use |
 |---|---|---|
@@ -119,8 +119,8 @@ Use filled buttons for primary submission and text/outlined buttons for secondar
 | Empty inventory | State that no batches match the filters |
 | Invalid input | Keep the form open and show field errors |
 | Missing expiry | Show “An expiry date is required” |
-| Local save succeeds | Close the dialog and update listening views |
-| Loading / network failure | Not implemented; define when adding API calls |
+| Server save succeeds | Update views from confirmed records and close the dialog |
+| Loading / network failure | Show connecting or retry state; preserve the last snapshot on refresh failure |
 | Permission denied | Planned; explain the restriction without exposing protected data |
 
 ## 07 · Icons
@@ -144,7 +144,7 @@ Debug builds default to iPhone 16 Device Preview. Use `--dart-define=DEVICE_PREV
 
 ## 09 · Motion specification
 
-Sources: [app_motion.dart](lib/widgets/app_motion.dart) and `TrendChart` in [clinic_ui.dart](lib/widgets/clinic_ui.dart).
+Sources: [app_motion.dart](frontend/lib/widgets/app_motion.dart) and `TrendChart` in [clinic_ui.dart](frontend/lib/widgets/clinic_ui.dart).
 
 | Interaction | Implemented motion |
 |---|---|
@@ -174,10 +174,15 @@ These are requirements to verify, not completed certification:
 - Do not shrink essential labels merely to fit a card.
 - Show branch/date context before replacing a saved report.
 
-Dates follow the Philippine clinic day (UTC+8). Money is displayed as rounded whole Philippine pesos. Prototype demonstrations must clearly identify sample data and reset-on-restart behavior.
+Dates follow the Philippine clinic day (UTC+8). Money is displayed as rounded whole Philippine pesos. Explicit demo builds must identify sample data and reset-on-restart behavior; local API builds show a database-connected status.
 
 ## 11 · Review checklist
 
 Check phone and desktop widths, iPhone safe areas, tab direction, rapid tab changes, scroll reset, validation, empty results, keyboard use, large text, and reduced motion. Existing tests exercise 320 and 1440 px layouts; further device and accessibility checks remain manual.
 
 When changing tokens, breakpoints, or motion, update this document and the corresponding source together.
+
+
+## REST integration update - 18 October 2026
+
+SaveDialog now provides pending, validation/error, and confirmed-save states. ClinicConnection provides startup loading, empty-branch, and retry screens. The header refresh action reloads persistent records. Existing tokens, layouts, and motion remain shared across API and explicit demo modes.

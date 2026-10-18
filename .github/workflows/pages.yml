@@ -16,6 +16,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Check out project
         uses: actions/checkout@v6
@@ -40,12 +43,12 @@ jobs:
       - name: Build hosted iPhone preview
         env:
           REPOSITORY_NAME: ${{ github.event.repository.name }}
-        run: flutter build web --profile --dart-define=HOSTED_PREVIEW=true --base-href "/$REPOSITORY_NAME/"
+        run: flutter build web --profile --dart-define=HOSTED_PREVIEW=true --dart-define=USE_DEMO_DATA=true --base-href "/$REPOSITORY_NAME/"
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: build/web
+          path: frontend/build/web
 
   deploy:
     needs: build
