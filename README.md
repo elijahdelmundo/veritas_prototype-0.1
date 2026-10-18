@@ -1,3 +1,13 @@
+<!-- presentation:start -->
+<div align="center">
+  <img src="docs/assets/readme-header.svg" width="100%" alt="Veritas project documentation — Overview" />
+  <p><a href="README.md">Overview</a> &nbsp;·&nbsp; <a href="ARCHITECTURE.md">Architecture</a> &nbsp;·&nbsp; <a href="DESIGNSYSTEM.md">Design System</a> &nbsp;·&nbsp; <a href="PRD.md">Product Requirements</a> &nbsp;·&nbsp; <a href="WORKFLOW.md">Clinic Workflows</a></p>
+  <p><a href="https://elijahdelmundo.github.io/veritas_prototype-0.1/docs/#readme">Open designed documentation ↗</a></p>
+</div>
+
+---
+<!-- presentation:end -->
+
 # Veritas Prototype 0.1
 
 Vista Care is a six-branch clinic dashboard with a **Flutter frontend and

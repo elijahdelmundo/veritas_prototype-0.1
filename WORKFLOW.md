@@ -1,3 +1,13 @@
+<!-- presentation:start -->
+<div align="center">
+  <img src="docs/assets/workflow-header.svg" width="100%" alt="Veritas project documentation — Clinic Workflows" />
+  <p><a href="README.md">Overview</a> &nbsp;·&nbsp; <a href="ARCHITECTURE.md">Architecture</a> &nbsp;·&nbsp; <a href="DESIGNSYSTEM.md">Design System</a> &nbsp;·&nbsp; <a href="PRD.md">Product Requirements</a> &nbsp;·&nbsp; <a href="WORKFLOW.md">Clinic Workflows</a></p>
+  <p><a href="https://elijahdelmundo.github.io/veritas_prototype-0.1/docs/#workflow">Open designed documentation ↗</a></p>
+</div>
+
+---
+<!-- presentation:end -->
+
 # Clinic Workflows
 
 > Veritas Prototype 0.1 · Flutter + Laravel REST API
@@ -53,6 +63,13 @@ server binding and network access must also allow that host.
 
 ## 03 · Application startup and navigation
 
+<!-- presentation:start -->
+![Clinic Workflows diagram](docs/assets/workflow-startup.svg)
+
+<details>
+<summary>View Mermaid diagram source</summary>
+
+<!-- presentation:end -->
 ```mermaid
 flowchart TD
     Launch["Launch Flutter"] --> Mode{"Explicit sample-data mode?"}
@@ -68,6 +85,9 @@ flowchart TD
     Dashboard --> Refresh["Refresh clinic data"]
     Refresh --> Load
 ```
+<!-- presentation:start -->
+</details>
+<!-- presentation:end -->
 
 1. Local app startup uses the Laravel API by default.
 2. Show a connecting state while loading the three resource collections.
@@ -95,6 +115,13 @@ visible and the refresh error is reported.
 9. Return the stored report as JSON.
 10. Update Flutter's cache and aggregates, then close the dialog.
 
+<!-- presentation:start -->
+![Clinic Workflows diagram](docs/assets/workflow-report.svg)
+
+<details>
+<summary>View Mermaid diagram source</summary>
+
+<!-- presentation:end -->
 ```mermaid
 sequenceDiagram
     actor User
@@ -110,6 +137,9 @@ sequenceDiagram
     API-->>UI: 200 with persisted report
     UI->>UI: Replace cache, recalculate totals, close form
 ```
+<!-- presentation:start -->
+</details>
+<!-- presentation:end -->
 
 Patient count must be a nonnegative integer. Money must be nonnegative,
 within the supported range, and have no more than two decimal places.
@@ -287,6 +317,13 @@ returning patients/follow-ups, attendance, conflicts, inventory, fast-moving
 supplies, and access/discrepancy alerts when those modules exist. Inspect
 supporting records, assign follow-up, and track resolution and audit history.
 
+<!-- presentation:start -->
+![Clinic Workflows diagram](docs/assets/workflow-planned.svg)
+
+<details>
+<summary>View Mermaid diagram source</summary>
+
+<!-- presentation:end -->
 ```mermaid
 flowchart TD
     Login["Authenticate user"] --> Policy{"Authorize role, branch and action"}
@@ -297,6 +334,9 @@ flowchart TD
     Persist --> Central["Authorized Pasig / owner monitoring"]
     Central --> Action["Human follow-up and resolution"]
 ```
+<!-- presentation:start -->
+</details>
+<!-- presentation:end -->
 
 ## 11 · Verification
 

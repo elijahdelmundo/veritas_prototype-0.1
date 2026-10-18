@@ -1,0 +1,1802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Veritas project reference: architecture, design system, requirements, workflow, and setup.">
+  <title>Veritas documentation</title>
+  <link rel="stylesheet" href="assets/docs.css">
+  <script src="assets/docs.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to document</a>
+  <header class="topbar">
+    <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="topbar-brand">veritas</span><span class="topbar-slash">/</span><span class="topbar-label">Project documentation</span>
+    <span class="topbar-spacer"></span><button class="print" id="print-document" type="button">Print / PDF</button>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><span class="brand-mark" aria-hidden="true">v</span><div><strong>Veritas</strong><small>Prototype 0.1</small></div></div>
+      <div class="nav-heading">PROJECT REFERENCE</div>
+      <nav class="file-nav" aria-label="Documents"><a class="file-link" href="#readme" style="--accent:#137F78;--soft:#EAF8F5"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h8c3 0 4 2 4 4v19c0-3-2-4-5-4H4V6Zm24 0h-8c-3 0-4 2-4 4v19c0-3 2-4 5-4h7V6Z"/></g></svg><span>README.md</span></a><a class="file-link" href="#architecture" style="--accent:#7C55C7;--soft:#F3EEFC"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 4 13 7-13 7L3 11 16 4Z"/><path d="m3 17 13 7 13-7M3 23l13 7 13-7"/></g></svg><span>ARCHITECTURE.md</span></a><a class="file-link" href="#designsystem" style="--accent:#CE4DA4;--soft:#FDEEF8"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 4C9 4 3 9 3 17s6 12 12 12c4 0 5-2 3-4-2-3 0-5 3-5h3c5 0 7-4 5-8C27 7 23 4 17 4Z"/><circle cx="10" cy="13" r="1"/><circle cx="17" cy="10" r="1"/><circle cx="24" cy="13" r="1"/></g></svg><span>DESIGNSYSTEM.md</span></a><a class="file-link" href="#prd" style="--accent:#7656CE;--soft:#F2EEFC"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h12l7 7v20H7V3Z"/><path d="M19 3v8h7M12 17h9M12 22h9"/></g></svg><span>PRD.md</span></a><a class="file-link" href="#workflow" style="--accent:#397ABD;--soft:#EDF5FD"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="3" width="12" height="7" rx="2"/><rect x="2" y="22" width="12" height="7" rx="2"/><rect x="20" y="22" width="10" height="7" rx="2"/><path d="M16 10v6H8v6m8-6h9v6"/></g></svg><span>WORKFLOW.md</span></a></nav>
+      <div class="nav-heading">ON THIS PAGE</div>
+      <nav class="toc" id="toc" aria-label="Current document sections"></nav>
+      <div class="sidebar-foot">FLUTTER + LARAVEL<br>PROJECT DOCUMENTATION</div>
+    </aside>
+    <main id="content" tabindex="-1">
+      <div class="breadcrumb"><span>docs</span><span>/</span><strong id="current-file">README.md</strong><a class="source-link" id="source-link" href="../README.md">View Markdown ↗</a></div>
+      <article class="document" id="readme" data-file="README.md" data-title="Overview" style="--accent:#137F78;--soft:#EAF8F5"><div class="doc-eyebrow"><span class="doc-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h8c3 0 4 2 4 4v19c0-3-2-4-5-4H4V6Zm24 0h-8c-3 0-4 2-4 4v19c0-3 2-4 5-4h7V6Z"/></g></svg></span>README.md<span class="doc-pill">VERITAS · PROTOTYPE 0.1</span></div><header class="intro"><h1>Veritas Prototype 0.1</h1>
+<p>Vista Care is a six-branch clinic dashboard with a <strong>Flutter frontend and
+Laravel 12 REST API</strong>. Laravel stores local data in SQLite; Flutter displays
+reports, inventory, branches, and calculated summaries.</p>
+</header><div class="sections"><section class="doc-section wide"><h2 id="readme-section-1">Layout</h2>
+<pre><code class="language-text">frontend/        Flutter UI, HTTP client, models, tests, platform projects
+backend/         Laravel API, models, migrations, seeders, tests
+scripts/         Windows helpers for XAMPP PHP and Composer
+.vscode/         Flutter launch configurations
+.github/         Flutter/Laravel CI and GitHub Pages workflow
+</code></pre>
+<p>Keep the repository root open in VS Code. Run Flutter commands from
+<code>frontend</code>; run the Windows helpers from the root.</p>
+</section><section class="doc-section"><h2 id="readme-section-2">1. Start Laravel</h2>
+<p>The installed setup uses XAMPP PHP 8.2 and Laravel 12. Helpers locate PHP on
+PATH or fall back to <code>C:\xampp\php\php.exe</code>, and enable the installed ZIP
+extension for Composer when needed without editing global PHP settings.</p>
+<p>For this installed project, run:</p>
+<pre><code class="language-powershell">.\scripts\artisan.cmd migrate
+.\scripts\artisan.cmd db:seed --class=ClinicDemoSeeder
+.\scripts\artisan.cmd serve --host=127.0.0.1 --port=8000
+</code></pre>
+<p>Seeding creates six sample branches, 180 reports, and 36 batches. Rerunning
+the seeder preserves existing report and quantity edits.</p>
+<p>Useful URLs:</p>
+<ul>
+<li><a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> — Laravel welcome page.</li>
+<li><a href="http://127.0.0.1:8000/up">http://127.0.0.1:8000/up</a> — framework health.</li>
+<li><a href="http://127.0.0.1:8000/api/v1/branches">http://127.0.0.1:8000/api/v1/branches</a> — REST branch data.</li>
+<li><a href="http://127.0.0.1:8000/api/v1/reports">http://127.0.0.1:8000/api/v1/reports</a> — stored daily reports.</li>
+<li><a href="http://127.0.0.1:8000/api/v1/medicine-batches">http://127.0.0.1:8000/api/v1/medicine-batches</a> — stored inventory.</li>
+</ul>
+</section><section class="doc-section"><h2 id="readme-section-3">2. Start Flutter</h2>
+<p>In another terminal:</p>
+<pre><code class="language-powershell">cd frontend
+flutter pub get
+flutter run -d chrome
+</code></pre>
+<p>This now connects to Laravel by default. Report and inventory edits persist
+in the database across app restarts. Failed connections show Retry; failed
+saves preserve form input.</p>
+<p>For the full browser layout:</p>
+<pre><code class="language-powershell">flutter run -d chrome --dart-define=DEVICE_PREVIEW=false
+</code></pre>
+<p>Default API URLs:</p>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome / desktop / iOS simulator</td>
+<td><a href="http://127.0.0.1:8000/api/v1">http://127.0.0.1:8000/api/v1</a></td>
+</tr>
+<tr>
+<td>Android emulator</td>
+<td><a href="http://10.0.2.2:8000/api/v1">http://10.0.2.2:8000/api/v1</a></td>
+</tr>
+</tbody>
+</table>
+<p>Override for another server:</p>
+<pre><code class="language-powershell">flutter run -d chrome --dart-define=API_BASE_URL=http://127.0.0.1:8000/api/v1
+</code></pre>
+<p>A physical phone or another computer needs a reachable development host
+address; its localhost is not your computer. Intentional LAN testing also
+requires a server bind such as <code>--host=0.0.0.0</code>, network/firewall access, and
+an appropriate browser-origin policy. Native iOS still needs device testing.</p>
+</section><section class="doc-section"><h2 id="readme-section-4">3. Try persistence</h2>
+<ol>
+<li>Open Daily reports, edit today's Pasig report, and save.</li>
+<li>Reload Flutter: the edited report is fetched from Laravel.</li>
+<li>Open inventory and restock a batch or set its on-hand quantity.</li>
+<li>Reload again: the quantity and expiry are retained.</li>
+<li>Use the header refresh action to fetch another client's committed changes.</li>
+</ol>
+<p>This is request/response synchronization, not live push updates.
+Users must connect to the same backend to share data. Separate local
+SQLite files on groupmates' computers remain separate databases.</p>
+</section><section class="doc-section"><h2 id="readme-section-5">Explicit offline/design demo</h2>
+<p>To view the design without running Laravel:</p>
+<pre><code class="language-powershell">cd frontend
+flutter run -d chrome --dart-define=USE_DEMO_DATA=true
+</code></pre>
+<p>Only this explicit mode creates in-memory sample data and resets on reload.
+A connection failure in API mode never silently switches to demo mode.</p>
+<p>Device Preview starts with iPhone 16 in debug. Open <strong>Dart: Open DevTools</strong>
+and the <strong>device_preview</strong> extension to change devices. It is a layout
+simulation, not an actual iOS runtime.</p>
+</section><section class="doc-section wide"><h2 id="readme-section-6">Fresh clone setup</h2>
+<p>Install Flutter, PHP compatible with Laravel 12, and Composer. With PHP and
+Composer on PATH, run this from the root:</p>
+<pre><code class="language-powershell">cd backend
+composer install
+Copy-Item .env.example .env
+php artisan key:generate
+if (-not (Test-Path database/database.sqlite)) { New-Item -ItemType File database/database.sqlite }
+php artisan migrate
+php artisan db:seed --class=ClinicDemoSeeder
+php artisan serve --host=127.0.0.1 --port=8000
+</code></pre>
+<p>Do not overwrite an existing <code>.env</code> or regenerate an existing application
+key when following fresh-clone instructions. On this XAMPP computer the
+root helpers can replace <code>php artisan</code> and <code>composer</code> commands.</p>
+<p>Local <code>backend/.env</code>, application keys, SQLite data, <code>vendor</code>, and frontend
+build/caches are ignored. Commit migrations, <code>.env.example</code>, source, and
+lockfiles. No Node build is needed for the current API.</p>
+</section><section class="doc-section wide"><h2 id="readme-section-7">Database and access boundary</h2>
+<p>SQLite is the exercised local database. XAMPP MySQL can be configured later
+by creating a database, changing Laravel's <code>DB_*</code> environment values, and
+running migrations; it has not been verified by this integration.</p>
+<p>The prototype API is enabled only in Laravel local/testing environments.
+It has no login, user/branch authorization, medical records, approval
+workflow, or audit log yet. CORS accepts browser origins on localhost and
+127.0.0.1; it is not an authentication mechanism.</p>
+<p>Use sample data locally. Before public multiuser deployment, implement
+identity, server-enforced permissions, HTTPS, and the required audit rules.</p>
+</section><section class="doc-section"><h2 id="readme-section-8">Verification</h2>
+<p>From <code>frontend</code>:</p>
+<pre><code class="language-sh">flutter analyze
+flutter test
+</code></pre>
+<p>From the root:</p>
+<pre><code class="language-powershell">.\scripts\composer.cmd validate --strict
+.\scripts\composer.cmd check-platform-reqs
+.\scripts\artisan.cmd test
+</code></pre>
+</section><section class="doc-section wide"><h2 id="readme-section-9">GitHub Pages</h2>
+<p><a href="https://elijahdelmundo.github.io/veritas_prototype-0.1/">https://elijahdelmundo.github.io/veritas_prototype-0.1/</a></p>
+<p>Pages hosts only the Flutter frontend and cannot execute Laravel.
+The workflow builds from <code>frontend</code> with explicit demo mode:</p>
+<pre><code class="language-sh">flutter build web --profile --dart-define=HOSTED_PREVIEW=true --dart-define=USE_DEMO_DATA=true --base-href /veritas_prototype-0.1/
+</code></pre>
+<p>The hosted iPhone design demo resets on reload and does not connect to a
+visitor's localhost. A real shared API requires separate PHP-capable
+hosting and a deployed frontend configured with its HTTPS API URL.</p>
+</section><section class="doc-section"><h2 id="readme-section-10">Documentation</h2>
+<ul>
+<li><a href="#architecture">Architecture</a>: components, schema, REST contract, deployment boundaries.</li>
+<li><a href="#workflow">Workflow</a>: connected report/inventory journeys and planned clinic operations.</li>
+<li><a href="#designsystem">Design system</a>: visual tokens, components, responsiveness, motion.</li>
+<li><a href="#prd">PRD</a>: product scope and future requirements.</li>
+<li><a href="../backend/README.md">Backend</a>: Laravel-specific setup.</li>
+</ul>
+</section></div><footer class="doc-end"><span>VERITAS / PROJECT DOCUMENTATION</span><span>README.md</span></footer></article><article class="document" id="architecture" data-file="ARCHITECTURE.md" data-title="Architecture" style="--accent:#7C55C7;--soft:#F3EEFC" hidden><div class="doc-eyebrow"><span class="doc-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 4 13 7-13 7L3 11 16 4Z"/><path d="m3 17 13 7 13-7M3 23l13 7 13-7"/></g></svg></span>ARCHITECTURE.md<span class="doc-pill">VERITAS · PROTOTYPE 0.1</span></div><header class="intro"><h1>Architecture</h1>
+<blockquote>
+<p>Veritas Prototype 0.1 · Vista Care clinic administration
+Current implementation: 18 October 2026</p>
+</blockquote>
+<p>Related documents: <a href="#workflow">Workflows</a> · <a href="#prd">Product requirements</a> · <a href="#designsystem">Design system</a> · <a href="#readme">Setup</a></p>
+</header><div class="sections"><section class="doc-section wide"><h2 id="architecture-section-1"><span class="section-number">01</span><span class="section-dot"> · </span>System overview</h2>
+<p>The project uses <strong>Flutter for the frontend, Laravel 12 for the REST API, and
+a database accessed through Laravel's Eloquent ORM</strong>. Local development uses
+SQLite. Flutter never connects directly to the database.</p>
+<p>The current integration persists branch information, daily reports, and
+medicine batches. Authentication, clinical records, billing transactions,
+approval workflows, and audit trails remain future work.</p>
+<figure class="diagram"><a href="assets/architecture-flow.svg" target="_blank" rel="noopener"><img src="assets/architecture-flow.svg" alt="Architecture diagram" /></a><figcaption><span>VERITAS / SYSTEM DIAGRAM</span><a href="assets/architecture-flow.svg" target="_blank" rel="noopener">Open diagram ↗</a></figcaption><details><summary>View Mermaid source</summary><pre><code>flowchart LR
+    UI[&quot;Flutter screens and forms&quot;] --&gt; Store[&quot;ClinicStore / ChangeNotifier&quot;]
+    Store --&gt; HTTP[&quot;ClinicApi / Dart http&quot;]
+    HTTP -- &quot;HTTP JSON: /api/v1&quot; --&gt; API[&quot;Laravel routes and controller&quot;]
+    API --&gt; Validation[&quot;Server validation and local-environment gate&quot;]
+    Validation --&gt; Models[&quot;Eloquent models&quot;]
+    Models --&gt; DB[(&quot;SQLite database&quot;)]
+    DB --&gt; Models
+    Models -- &quot;JSON resources&quot; --&gt; HTTP
+    HTTP -- &quot;Confirmed results&quot; --&gt; Store
+    Store --&gt; UI</code></pre></details></figure>
+<p>The project folder is <code>veritas_prototype 0.1</code>, its Flutter package remains
+<code>demo_demo</code>, and the visible product brand is Vista Care.</p>
+</section><section class="doc-section"><h2 id="architecture-section-2"><span class="section-number">02</span><span class="section-dot"> · </span>Technology stack</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Current implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UI</td>
+<td>Flutter / Dart; Material 3 and shared custom widgets</td>
+</tr>
+<tr>
+<td>UI state</td>
+<td>ChangeNotifier, ListenableBuilder, page-local form/filter state</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>Dart <code>http</code> package; JSON requests/responses and 12-second timeout</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Laravel 12 / PHP ^8.2; versioned routes under <code>/api/v1</code></td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>SQLite locally; Laravel migrations and Eloquent</td>
+</tr>
+<tr>
+<td>Optional database</td>
+<td>XAMPP MySQL can be configured later; not exercised by this integration</td>
+</tr>
+<tr>
+<td>Motion</td>
+<td>Flutter animations and Cupertino page transitions</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>Device Preview 3, iPhone 16 by default in debug</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Flutter unit/widget tests; Laravel feature tests and PHPUnit</td>
+</tr>
+<tr>
+<td>Web hosting</td>
+<td>GitHub Pages for the explicit sample-data frontend only</td>
+</tr>
+</tbody>
+</table>
+<p>Laravel 12 was selected for the installed XAMPP PHP 8.2. Composer installs
+locked backend dependencies. There is no handwritten JavaScript bridge
+between Flutter and Laravel: the boundary is an ordinary HTTP REST API.</p>
+</section><section class="doc-section"><h2 id="architecture-section-3"><span class="section-number">03</span><span class="section-dot"> · </span>Repository structure</h2>
+<pre><code class="language-text">veritas_prototype 0.1/
+├── frontend/
+│   ├── lib/
+│   │   ├── main.dart                    # Select API or explicit demo mode
+│   │   ├── data/
+│   │   │   ├── clinic_models.dart       # Models, JSON parsing, dates/currency
+│   │   │   ├── clinic_api.dart          # HTTP requests and API errors
+│   │   │   └── clinic_store.dart        # UI cache, aggregates, confirmed writes
+│   │   ├── pages/                       # Dashboard, reports, branches, inventory
+│   │   └── widgets/
+│   │       ├── clinic_connection.dart   # Loading, connection error, retry
+│   │       ├── save_dialog.dart         # Async saves, errors, duplicate-tap guard
+│   │       ├── clinic_ui.dart           # Tokens, components, charts
+│   │       └── app_motion.dart          # Shared motion
+│   ├── test/                           # Existing UI/store and HTTP tests
+│   ├── android/ ios/ web/ windows/ macos/ linux/
+│   └── pubspec.yaml
+├── backend/
+│   ├── app/
+│   │   ├── Http/Controllers/ClinicController.php
+│   │   ├── Http/Middleware/LocalClinicApi.php
+│   │   ├── Http/Resources/              # Report/batch response shapes
+│   │   └── Models/                     # Branch, DailyReport, MedicineBatch
+│   ├── routes/api.php                  # Versioned REST routes
+│   ├── bootstrap/app.php               # Registers API routing
+│   ├── config/cors.php
+│   ├── database/migrations/
+│   ├── database/seeders/ClinicDemoSeeder.php
+│   └── tests/Feature/ClinicApiTest.php
+├── scripts/                            # Windows Artisan/Composer helpers
+├── .vscode/launch.json                  # Frontend run targets
+├── .github/workflows/                  # CI and frontend Pages deployment
+└── README.md / ARCHITECTURE.md / WORKFLOW.md / PRD.md / DESIGNSYSTEM.md
+</code></pre>
+<p>There is one Git repository at the root. Local <code>.env</code>, SQLite files,
+<code>vendor</code>, Flutter caches, and build outputs remain ignored.</p>
+</section><section class="doc-section wide"><h2 id="architecture-section-4"><span class="section-number">04</span><span class="section-dot"> · </span>Data ownership and schema</h2>
+<p>Laravel's database is the authority in API mode. <code>ClinicStore.remote</code> keeps
+a UI snapshot and calculates visible aggregates; it is not durable storage.
+The original in-memory store remains available for tests and explicit demos.</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Important fields</th>
+<th>Integrity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>branches</td>
+<td>ID, unique name, address, target, growth, staff JSON</td>
+<td>Unique branch name</td>
+</tr>
+<tr>
+<td>daily_reports</td>
+<td>Branch ID, date, patients, revenue, expenses, notes</td>
+<td>Foreign key; unique branch/date</td>
+</tr>
+<tr>
+<td>medicine_batches</td>
+<td>Branch ID, name, quantity, unit, expiry, threshold</td>
+<td>Foreign key; one row per batch</td>
+</tr>
+</tbody>
+</table>
+<p>Reports use database decimal columns with two fractional digits. API decimal
+amounts are returned as strings and parsed into Dart doubles for display
+and aggregation. The UI displays whole pesos in summary cards and retains
+two decimal places when editing reports.</p>
+<p>Staff entries and ratings are illustrative JSON embedded in a branch; they
+are not authenticated user accounts, live attendance records, or a review
+submission system.</p>
+<p><code>ClinicDemoSeeder</code> initializes six branches, 30 reports per branch, and six
+medicine batches per branch. It uses first-or-create behavior so rerunning
+it preserves existing quantities and report edits. It is an explicit
+development operation, not something performed on each app launch.</p>
+</section><section class="doc-section wide"><h2 id="architecture-section-5"><span class="section-number">05</span><span class="section-dot"> · </span>REST API contract</h2>
+<p>All requests use <code>Accept: application/json</code>; writes also use
+<code>Content-Type: application/json</code>. Successful responses wrap values in
+<code>{&quot;data&quot;: ...}</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint under /api/v1</th>
+<th>Purpose</th>
+<th>Success</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/branches</td>
+<td>Branch metadata and sample staff</td>
+<td>200</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/reports</td>
+<td>Persisted daily reports</td>
+<td>200</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>/branches/{id}/reports/{YYYY-MM-DD}</td>
+<td>Create/replace report for branch/date</td>
+<td>200</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/medicine-batches</td>
+<td>Persisted inventory</td>
+<td>200</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/medicine-batches</td>
+<td>Create a distinct medicine batch</td>
+<td>201</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>/medicine-batches/{id}</td>
+<td>Restock or set on-hand quantity</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>Report write body:</p>
+<pre><code class="language-json">{
+  &quot;patients&quot;: 42,
+  &quot;revenue&quot;: 35000.25,
+  &quot;expenses&quot;: 12500.50,
+  &quot;notes&quot;: &quot;Daily review completed.&quot;
+}
+</code></pre>
+<p>Batch creation requires <code>branch_id</code>, <code>name</code>, <code>quantity</code>, <code>unit</code>,
+<code>expiry</code> (YYYY-MM-DD), and <code>threshold</code>. The server assigns the ID.</p>
+<p>Stock write bodies:</p>
+<pre><code class="language-json">{&quot;operation&quot;: &quot;restock&quot;, &quot;quantity&quot;: 10}
+</code></pre>
+<pre><code class="language-json">{&quot;operation&quot;: &quot;set&quot;, &quot;quantity&quot;: 25}
+</code></pre>
+<p>Restocking adds to the server's current quantity inside a transaction with a
+row lock. A correction explicitly replaces the on-hand amount. Stock
+quantities and thresholds must be nonnegative integers; restock amounts
+must be positive. The supported stock limit is 1,000,000,000.</p>
+<p>Reports require nonnegative integer patients and nonnegative monetary
+amounts with at most two decimal places. Patient count is capped at
+1,000,000 and monetary amounts at 999,999,999,999.99. Notes are optional
+nullable text, capped at 5000 characters. Future report dates are rejected.
+New batches cannot have expiry before the Philippine clinic day.</p>
+<p>Validation errors return 422 with field errors. Missing resources return
+404. The local-only environment gate returns 503 outside local/testing.</p>
+<p>There are no delete endpoints, authentication endpoints, pagination,
+websocket subscriptions, or clinical/billing APIs in this version.</p>
+</section><section class="doc-section"><h2 id="architecture-section-6"><span class="section-number">06</span><span class="section-dot"> · </span>Frontend request and save lifecycle</h2>
+<h3>Startup and refresh</h3>
+<ol>
+<li>Resolve <code>API_BASE_URL</code> before Device Preview changes simulated platform behavior.</li>
+<li>Create a remote store unless <code>USE_DEMO_DATA=true</code> was explicitly requested.</li>
+<li>Fetch branches, reports, and batches with three GET requests.</li>
+<li>Replace the UI snapshot only when all requests succeed.</li>
+<li>Display the dashboard after data is ready.</li>
+</ol>
+<p>Startup shows loading or connection/retry screens. An empty database produces
+a no-branches state. A failed refresh retains the last successful snapshot
+and shows an error; it never silently switches to sample mode.</p>
+<p>The refresh action requests a new snapshot. Other clients' changes appear
+after refresh/reload; this is not real-time push synchronization. The three
+GET requests are independent and do not guarantee a transactionally
+consistent snapshot during concurrent edits.</p>
+<h3>Mutations</h3>
+<ol>
+<li>Validate the form locally.</li>
+<li>Disable duplicate submission and keep entered data in place.</li>
+<li>Send the request and wait for Laravel's validation and database write.</li>
+<li>Update local state using the server's returned record and ID.</li>
+<li>Close the dialog only on success.</li>
+</ol>
+<p>Rejected, timed-out, or disconnected saves show an error and retain the form.
+Transport timeouts can have ambiguous outcomes if a write reached the server;
+automatic retries and exactly-once mutation guarantees are not implemented.
+Report PUT is naturally keyed by branch/date; batch creation and restocks
+should be checked before retrying after an uncertain response.</p>
+<p>Stock corrections and report edits currently use last-write behavior.
+Version conflicts, full inventory event history, and audit records remain
+future requirements.</p>
+</section><section class="doc-section wide"><h2 id="architecture-section-7"><span class="section-number">07</span><span class="section-dot"> · </span>Local networking and access boundary</h2>
+<table>
+<thead>
+<tr>
+<th>Client</th>
+<th>Default API base URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome / desktop / iOS simulator</td>
+<td><a href="http://127.0.0.1:8000/api/v1">http://127.0.0.1:8000/api/v1</a></td>
+</tr>
+<tr>
+<td>Android emulator</td>
+<td><a href="http://10.0.2.2:8000/api/v1">http://10.0.2.2:8000/api/v1</a></td>
+</tr>
+<tr>
+<td>Physical device / another computer</td>
+<td>Supply the development server's reachable LAN URL</td>
+</tr>
+</tbody>
+</table>
+<p>Override with <code>--dart-define=API_BASE_URL=http://HOST:8000/api/v1</code>.
+The default server binds to loopback. Shared LAN testing requires an
+intentional server bind and reachable host/firewall configuration.</p>
+<p>CORS accepts browser origins on localhost or 127.0.0.1 with any port.
+Other browser origins are rejected. CORS is a browser policy, not user
+authorization. Android debug/profile permits local HTTP; release Android
+keeps its normal transport policy. macOS client networking is enabled.
+Native iOS and physical-device behavior still require device validation.</p>
+<p><strong>This is a local development API without authentication.</strong> Routes are
+enabled only in Laravel's local/testing environments. Do not change the
+environment gate to expose clinic writes publicly without implementing
+authentication and resource/branch policies.</p>
+</section><section class="doc-section"><h2 id="architecture-section-8"><span class="section-number">08</span><span class="section-dot"> · </span>Deployment and demo behavior</h2>
+<p>GitHub Pages cannot execute PHP. Its workflow deliberately builds Flutter
+with <code>USE_DEMO_DATA=true</code> and <code>HOSTED_PREVIEW=true</code>; that hosted sample
+resets on reload and never calls a visitor's local Laravel server.</p>
+<p>A shared API deployment needs PHP-capable hosting, a persistent database,
+HTTPS, authentication, branch policies, approved browser origins, and a
+configured frontend API URL. SQLite remains the exercised local database;
+MySQL/PostgreSQL migrations and operations need testing before a switch.</p>
+</section><section class="doc-section wide"><h2 id="architecture-section-9"><span class="section-number">09</span><span class="section-dot"> · </span>Verification and next architecture steps</h2>
+<p>Run Flutter checks inside <code>frontend</code> and Laravel checks using the root helpers:</p>
+<pre><code class="language-sh">flutter analyze
+flutter test
+flutter build web --profile --dart-define=HOSTED_PREVIEW=true --dart-define=USE_DEMO_DATA=true --base-href /veritas_prototype-0.1/
+</code></pre>
+<pre><code class="language-powershell">.\scripts\artisan.cmd test
+</code></pre>
+<p>Tests cover HTTP serialization, server-confirmed saves, failed writes,
+refresh failure/retry, duplicate-tap prevention, REST persistence, report
+uniqueness, stock operations, validation, CORS, the environment gate, and
+the earlier navigation/layout scenarios.</p>
+<p>Next steps: identity and role/branch authorization, audit history, durable
+submission/approval states, patient records, scheduling, transaction-level
+billing, pagination, concurrency policies, notification delivery, and backup
+and restore procedures. Installing a REST layer does not complete these
+broader clinic workflows.</p>
+</section></div><footer class="doc-end"><span>VERITAS / PROJECT DOCUMENTATION</span><span>ARCHITECTURE.md</span></footer></article><article class="document" id="designsystem" data-file="DESIGNSYSTEM.md" data-title="Design System" style="--accent:#CE4DA4;--soft:#FDEEF8" hidden><div class="doc-eyebrow"><span class="doc-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 4C9 4 3 9 3 17s6 12 12 12c4 0 5-2 3-4-2-3 0-5 3-5h3c5 0 7-4 5-8C27 7 23 4 17 4Z"/><circle cx="10" cy="13" r="1"/><circle cx="17" cy="10" r="1"/><circle cx="24" cy="13" r="1"/></g></svg></span>DESIGNSYSTEM.md<span class="doc-pill">VERITAS · PROTOTYPE 0.1</span></div><header class="intro"><h1>Design System</h1>
+<blockquote>
+<p>Veritas Prototype 0.1 · Vista Care interface
+Implementation reviewed: 16 October 2026</p>
+</blockquote>
+<p>Visual foundations, reusable components, responsive behavior, and motion rules for the clinic dashboard.</p>
+<p>Related documents: <a href="#architecture">Architecture</a> · <a href="#prd">Product requirements</a> · <a href="#workflow">Workflows</a></p>
+</header><div class="sections"><section class="doc-section wide"><h2 id="designsystem-section-1"><span class="section-number">01</span><span class="section-dot"> · </span>Brand identity and principles</h2>
+<p>The interface uses <strong>Vista Care</strong> and an owner-portal identity. The folder name, <code>veritas_prototype 0.1</code>, is a project label; a product-wide rebrand has not been implemented.</p>
+<ul>
+<li>Use blue for navigation and primary actions, green for positive operational or financial context, and white surfaces for readable information.</li>
+<li>Put important numbers before supporting explanations.</li>
+<li>Group related information in rounded panels with generous spacing.</li>
+<li>Make branch and date scope visible wherever totals or edits depend on them.</li>
+<li>Use motion to explain navigation and acknowledge interaction.</li>
+<li>Show operational alerts neutrally. A discrepancy prompts review; it is not an accusation.</li>
+</ul>
+<p>The supplied design-system image informs this document's structure. Its pink palette, Inter typeface, and Lucide icons are example choices, not this project's implementation.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-2"><span class="section-number">02</span><span class="section-dot"> · </span>Color palette</h2>
+<p>Source of truth: <code>AppColors</code> in <a href="../frontend/lib/widgets/clinic_ui.dart">clinic_ui.dart</a> and the theme in <a href="../frontend/lib/main.dart">main.dart</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Hex</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>blue</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#246BFD"></span><code>#246BFD</code></td>
+<td>Primary actions, selected navigation, blue trends</td>
+</tr>
+<tr>
+<td><code>green</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#229D78"></span><code>#229D78</code></td>
+<td>Positive status, collection and care highlights</td>
+</tr>
+<tr>
+<td><code>ink</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#18283F"></span><code>#18283F</code></td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>muted</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#8792A3"></span><code>#8792A3</code></td>
+<td>Secondary labels and supporting text</td>
+</tr>
+<tr>
+<td><code>background</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#F5F7FB"></span><code>#F5F7FB</code></td>
+<td>Application canvas and filled inputs</td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#EDF0F5"></span><code>#EDF0F5</code></td>
+<td>Dividers and panel borders</td>
+</tr>
+<tr>
+<td><code>orange</code></td>
+<td><span class="color-chip" aria-hidden="true" style="background:#D68A22"></span><code>#D68A22</code></td>
+<td>Stock and expiry attention states</td>
+</tr>
+<tr>
+<td>Surface</td>
+<td><span class="color-chip" aria-hidden="true" style="background:#FFFFFF"></span><code>#FFFFFF</code></td>
+<td>Cards, navigation, and page surfaces</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Additional treatment</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home hero gradient</td>
+<td><span class="color-chip" aria-hidden="true" style="background:#164FCB"></span><code>#164FCB</code> → <span class="color-chip" aria-hidden="true" style="background:#367EFF"></span><code>#367EFF</code></td>
+</tr>
+<tr>
+<td>Revenue hero gradient</td>
+<td><span class="color-chip" aria-hidden="true" style="background:#15775D"></span><code>#15775D</code> → <span class="color-chip" aria-hidden="true" style="background:#2AA783"></span><code>#2AA783</code></td>
+</tr>
+<tr>
+<td>Selected mobile indicator</td>
+<td><span class="color-chip" aria-hidden="true" style="background:#EAF1FF"></span><code>#EAF1FF</code></td>
+</tr>
+<tr>
+<td>Selected desktop tile</td>
+<td><span class="color-chip" aria-hidden="true" style="background:#EDF3FF"></span><code>#EDF3FF</code></td>
+</tr>
+<tr>
+<td>Status pill background</td>
+<td>Status color at 9% alpha</td>
+</tr>
+<tr>
+<td>Metric icon background</td>
+<td>Metric color at 8% alpha</td>
+</tr>
+</tbody>
+</table>
+<p>Use theme-derived error colors for future validation work. Some fields currently use direct red text; a unified error token is not defined. Dark mode and a complete alternate palette are not implemented or verified.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-3"><span class="section-number">03</span><span class="section-dot"> · </span>Typography</h2>
+<p>The theme requests <strong>Segoe UI</strong> without bundling a font asset. Platforms without it can fall back to another font; identical typography across devices is not guaranteed. Sizes below are Flutter logical pixels.</p>
+<table>
+<thead>
+<tr>
+<th>Theme style</th>
+<th align="right">Size</th>
+<th align="right">Weight</th>
+<th align="right">Letter spacing</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>headlineLarge</code></td>
+<td align="right">32</td>
+<td align="right">800</td>
+<td align="right">-1.3</td>
+<td>Main dashboard heading</td>
+</tr>
+<tr>
+<td><code>headlineMedium</code></td>
+<td align="right">26</td>
+<td align="right">700</td>
+<td align="right">-0.8</td>
+<td>Page/branch heading</td>
+</tr>
+<tr>
+<td><code>titleLarge</code></td>
+<td align="right">20</td>
+<td align="right">700</td>
+<td align="right">-0.5</td>
+<td>Section title</td>
+</tr>
+<tr>
+<td><code>titleMedium</code></td>
+<td align="right">15</td>
+<td align="right">600</td>
+<td align="right">Default</td>
+<td>Compact heading</td>
+</tr>
+<tr>
+<td><code>bodyMedium</code></td>
+<td align="right">14</td>
+<td align="right">Default</td>
+<td align="right">Default</td>
+<td>Main body</td>
+</tr>
+<tr>
+<td><code>bodySmall</code></td>
+<td align="right">12</td>
+<td align="right">Default</td>
+<td align="right">Default</td>
+<td>Supporting copy</td>
+</tr>
+</tbody>
+</table>
+<p>Components also use 27/800 metric values, a 40/700 revenue hero amount, and 9–11 px metadata. Smaller styles require readability review; they are not an accessibility endorsement.</p>
+<p>Use sentence case for actions. Reserve uppercase and wide tracking for short eyebrow labels. Pair amounts and counts with context: “patients today,” “last 7 days,” or “gross revenue (PHP).”</p>
+</section><section class="doc-section"><h2 id="designsystem-section-4"><span class="section-number">04</span><span class="section-dot"> · </span>Spacing and layout</h2>
+<p>The prototype uses explicit values rather than one enforced spacing-token class.</p>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th align="right">Current value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compact gaps</td>
+<td align="right">4, 6, 8, 10, 12</td>
+</tr>
+<tr>
+<td>Form-field gaps / grid gaps</td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td>General content spacing</td>
+<td align="right">16, 18, 20, 22, 24</td>
+</tr>
+<tr>
+<td>Section title spacing</td>
+<td align="right">26 above / 14 below</td>
+</tr>
+<tr>
+<td>Shell horizontal content padding</td>
+<td align="right">20 compact / 36 wide</td>
+</tr>
+<tr>
+<td>Shell content top / bottom</td>
+<td align="right">28 / 32</td>
+</tr>
+<tr>
+<td>Standard panel padding</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td>Metric card padding</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td>Grid spacing</td>
+<td align="right">14 horizontal and vertical</td>
+</tr>
+</tbody>
+</table>
+<p>Reuse these patterns for new screens. A future token consolidation should migrate existing widgets rather than create a competing scale.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-5"><span class="section-number">05</span><span class="section-dot"> · </span>Radius, borders, and elevation</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main panel</td>
+<td>24 px radius, 1 px line border</td>
+</tr>
+<tr>
+<td>Home hero</td>
+<td>26 px radius</td>
+</tr>
+<tr>
+<td>Input / filled button</td>
+<td>14 px radius</td>
+</tr>
+<tr>
+<td>Sidebar tile / selector</td>
+<td>12 px radius</td>
+</tr>
+<tr>
+<td>Selector menu</td>
+<td>16 px radius</td>
+</tr>
+<tr>
+<td>Status pill / progress bar</td>
+<td>8 px radius</td>
+</tr>
+<tr>
+<td>Panel shadow</td>
+<td><code>#030F274A</code>, blur 20, offset (0, 5)</td>
+</tr>
+</tbody>
+</table>
+<p>Keep depth subtle. Scale effects must preserve readable text and avoid clipping adjacent content.</p>
+</section><section class="doc-section wide"><h2 id="designsystem-section-6"><span class="section-number">06</span><span class="section-dot"> · </span>Components and interaction states</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Responsibility</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Panel</code></td>
+<td>Shared surface, border, radius, shadow</td>
+<td>Group content; a panel alone is not interactive</td>
+</tr>
+<tr>
+<td><code>MetricCard</code></td>
+<td>Icon, value, label, context</td>
+<td>Name the metric and period</td>
+</tr>
+<tr>
+<td><code>SectionTitle</code></td>
+<td>Heading, optional subtitle/action</td>
+<td>Keep actions specific to the section</td>
+</tr>
+<tr>
+<td><code>StatusPill</code></td>
+<td>Textual state</td>
+<td>Use text as well as color</td>
+</tr>
+<tr>
+<td><code>ResponsiveGrid</code></td>
+<td>Wrapping layout with entrances</td>
+<td>Set minimum width and maximum columns for content</td>
+</tr>
+<tr>
+<td><code>BranchSelector</code></td>
+<td>Shared branch scope</td>
+<td>All branches plus six named branches</td>
+</tr>
+<tr>
+<td><code>TrendChart</code></td>
+<td>Trend line, fill, labels, reveal</td>
+<td>Explain metric and period outside the chart</td>
+</tr>
+<tr>
+<td><code>StaffTile</code></td>
+<td>Identity, branch, sample rating</td>
+<td>Do not imply live attendance or real reviews</td>
+</tr>
+<tr>
+<td><code>MotionPage</code></td>
+<td>Directional tab transitions</td>
+<td>Use distinct page keys</td>
+</tr>
+<tr>
+<td><code>MotionEntrance</code></td>
+<td>Finite card entrance</td>
+<td>Stagger related cards, not every text line</td>
+</tr>
+<tr>
+<td><code>MotionFeedback</code></td>
+<td>Branch-card hover/press</td>
+<td>Preserve child interaction and semantics</td>
+</tr>
+</tbody>
+</table>
+<p>Use filled buttons for primary submission and text/outlined buttons for secondary actions. Forms use labeled Material fields, inline validation, cancel actions, and scrollable dialog content.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Existing behavior / guideline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty reports</td>
+<td>Explain the selected date has no reports and offer report creation</td>
+</tr>
+<tr>
+<td>Empty inventory</td>
+<td>State that no batches match the filters</td>
+</tr>
+<tr>
+<td>Invalid input</td>
+<td>Keep the form open and show field errors</td>
+</tr>
+<tr>
+<td>Missing expiry</td>
+<td>Show “An expiry date is required”</td>
+</tr>
+<tr>
+<td>Server save succeeds</td>
+<td>Update views from confirmed records and close the dialog</td>
+</tr>
+<tr>
+<td>Loading / network failure</td>
+<td>Show connecting or retry state; preserve the last snapshot on refresh failure</td>
+</tr>
+<tr>
+<td>Permission denied</td>
+<td>Planned; explain the restriction without exposing protected data</td>
+</tr>
+</tbody>
+</table>
+</section><section class="doc-section"><h2 id="designsystem-section-7"><span class="section-number">07</span><span class="section-dot"> · </span>Icons</h2>
+<p>Existing screens use Flutter's Material <code>Icons</code>, primarily outlined and rounded variants. Common sizes are 16–24 px; metric icons are 20 px. Keep stroke style and icon size consistent within a row. Icon-only actions need a tooltip or accessible label. Do not add a second icon library solely to imitate the reference image.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-8"><span class="section-number">08</span><span class="section-dot"> · </span>Responsive behavior</h2>
+<p>The actual shell navigation breakpoint is <strong>1000 logical pixels</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Width</th>
+<th>Shell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Below 1000</td>
+<td>Five-destination bottom navigation</td>
+</tr>
+<tr>
+<td>1000 and above</td>
+<td>218 px sidebar, including inventory access</td>
+</tr>
+</tbody>
+</table>
+<p>Main shell content has a maximum width of 1180; branch detail uses 1000 and inventory 1050. <code>ResponsiveGrid</code> calculates columns from available width and a default minimum card width of 160, up to four columns. Branch cards use a minimum of 260 and up to three columns. This is content-driven wrapping rather than a fixed tablet breakpoint.</p>
+<p>Tabs are Home, Daily reports, Statistics, Revenue, and Branches. Inventory opens from alerts, shortcuts, branch details, or the sidebar. Selecting another tab resets the shared scroll position to the top.</p>
+<p>Debug builds default to iPhone 16 Device Preview. Use <code>--dart-define=DEVICE_PREVIEW=false</code> to inspect the host's actual dimensions. Device Preview is not native iOS execution.</p>
+</section><section class="doc-section wide"><h2 id="designsystem-section-9"><span class="section-number">09</span><span class="section-dot"> · </span>Motion specification</h2>
+<p>Sources: <a href="../frontend/lib/widgets/app_motion.dart">app_motion.dart</a> and <code>TrendChart</code> in <a href="../frontend/lib/widgets/clinic_ui.dart">clinic_ui.dart</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Interaction</th>
+<th>Implemented motion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tab entry</td>
+<td>650 ms; starts at 28% horizontal travel, 20 px vertical offset, scale 0.94 → 1 with easeOutBack overshoot</td>
+</tr>
+<tr>
+<td>Entry opacity</td>
+<td>Fades in during the first 55% of progress</td>
+</tr>
+<tr>
+<td>Tab exit</td>
+<td>300 ms; opposite travel up to 14%, fade-out, scale toward 0.955</td>
+</tr>
+<tr>
+<td>Direction</td>
+<td>Relative tab order; accounts for RTL</td>
+</tr>
+<tr>
+<td>Grid entrance</td>
+<td>620 ms; fade and 16 px upward settle; interval stagger capped at index seven</td>
+</tr>
+<tr>
+<td>Chart reveal</td>
+<td>800 ms; left-to-right clipping with easeOutCubic</td>
+</tr>
+<tr>
+<td>Branch-card feedback</td>
+<td>220 ms; press scale 0.98 / hover scale 1.008</td>
+</tr>
+<tr>
+<td>Pushed pages</td>
+<td>Cupertino transitions across configured platforms</td>
+</tr>
+</tbody>
+</table>
+<p>Motion uses Flutter/Dart. Outgoing tab content ignores pointer events and is excluded from semantics. Reduced-motion handling checks MediaQuery's disable-animations flag and the host's reduce-motion feature; tab, entrance, chart, and route effects are skipped or shortened, and hover/press transforms become neutral.</p>
+<p>Do not introduce endless decoration, expensive blur transitions, or animation that delays saving. Reuse shared motion components.</p>
+</section><section class="doc-section wide"><h2 id="designsystem-section-10"><span class="section-number">10</span><span class="section-dot"> · </span>Accessibility and content rules</h2>
+<p>These are requirements to verify, not completed certification:</p>
+<ul>
+<li>Support keyboard navigation, visible focus, and meaningful control labels.</li>
+<li>Review muted text contrast against each actual background.</li>
+<li>Test large text, small screens, and forms with the keyboard visible.</li>
+<li>Do not communicate stock or expiry status using color alone.</li>
+<li>Provide chart summaries; the custom painter does not currently expose a complete accessible data table.</li>
+<li>Preserve tooltips and adequate touch targets.</li>
+<li>Do not shrink essential labels merely to fit a card.</li>
+<li>Show branch/date context before replacing a saved report.</li>
+</ul>
+<p>Dates follow the Philippine clinic day (UTC+8). Money is displayed as rounded whole Philippine pesos. Explicit demo builds must identify sample data and reset-on-restart behavior; local API builds show a database-connected status.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-11"><span class="section-number">11</span><span class="section-dot"> · </span>Review checklist</h2>
+<p>Check phone and desktop widths, iPhone safe areas, tab direction, rapid tab changes, scroll reset, validation, empty results, keyboard use, large text, and reduced motion. Existing tests exercise 320 and 1440 px layouts; further device and accessibility checks remain manual.</p>
+<p>When changing tokens, breakpoints, or motion, update this document and the corresponding source together.</p>
+</section><section class="doc-section"><h2 id="designsystem-section-12">REST integration update - 18 October 2026</h2>
+<p>SaveDialog now provides pending, validation/error, and confirmed-save states. ClinicConnection provides startup loading, empty-branch, and retry screens. The header refresh action reloads persistent records. Existing tokens, layouts, and motion remain shared across API and explicit demo modes.</p>
+</section></div><footer class="doc-end"><span>VERITAS / PROJECT DOCUMENTATION</span><span>DESIGNSYSTEM.md</span></footer></article><article class="document" id="prd" data-file="PRD.md" data-title="Product Requirements" style="--accent:#7656CE;--soft:#F2EEFC" hidden><div class="doc-eyebrow"><span class="doc-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h12l7 7v20H7V3Z"/><path d="M19 3v8h7M12 17h9M12 22h9"/></g></svg></span>PRD.md<span class="doc-pill">VERITAS · PROTOTYPE 0.1</span></div><header class="intro"><h1>Product Requirements Document</h1>
+<blockquote>
+<p>Veritas Prototype 0.1 · Centralized Multi-Branch Clinic Administration System
+Baseline: 16 October 2026 · Status: interactive owner-dashboard prototype</p>
+</blockquote>
+<p>Defines the problem, intended users, current product behavior, and requirements for future clinic operations.</p>
+<p>Related documents: <a href="#architecture">Architecture</a> · <a href="#designsystem">Design system</a> · <a href="#workflow">Workflows</a></p>
+</header><div class="sections"><section class="doc-section wide"><h2 id="prd-section-1"><span class="section-number">01</span><span class="section-dot"> · </span>Product overview</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>Veritas Prototype 0.1</td>
+</tr>
+<tr>
+<td>Current UI brand</td>
+<td>Vista Care</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Help authorized clinic management understand branch performance and operational needs</td>
+</tr>
+<tr>
+<td>Current users</td>
+<td>A simulated clinic owner; no authenticated user accounts</td>
+</tr>
+<tr>
+<td>Intended reach</td>
+<td>Six branches with Pasig as the proposed central administration hub</td>
+</tr>
+<tr>
+<td>Branches</td>
+<td>Laguna, Pasig, Caloocan, Parañaque, Quezon City, Valenzuela</td>
+</tr>
+<tr>
+<td>Current platform</td>
+<td>Flutter application with Android and Chrome development usage</td>
+</tr>
+<tr>
+<td>Current storage</td>
+<td>Laravel REST API with persistent local SQLite; explicit demo mode remains in-memory</td>
+</tr>
+</tbody>
+</table>
+<p>The product should give management one place to compare visits, collections, expenses, reports, and medicine inventory. The broader vision includes controlled patient records, billing, doctor attendance, scheduling, and auditability.</p>
+</section><section class="doc-section"><h2 id="prd-section-2"><span class="section-number">02</span><span class="section-dot"> · </span>Problem and goals</h2>
+<p>Information spread across branches makes it difficult to know which reports are complete, where supplies need attention, and how performance compares. The original workflow also identifies the need to protect clinical information and coordinate doctors across locations.</p>
+<h3>Prototype goals</h3>
+<ol>
+<li>Demonstrate an understandable overview of six branches.</li>
+<li>Let reviewers filter by branch and compare daily, seven-day, and thirty-day information.</li>
+<li>Demonstrate report entry/editing and inventory updates with immediate UI feedback.</li>
+<li>Show useful stock and expiry alerts.</li>
+<li>Provide responsive layouts and an iPhone screen preview for design review.</li>
+</ol>
+<h3>Production goals</h3>
+<p>Create durable, shared operations with server-enforced permissions, traceable changes, and reliable cross-branch coordination. Production goals are requirements for future work; they are not features delivered by this prototype.</p>
+<h3>Out of scope</h3>
+<p>A patient-facing portal, online patient self-service, payment-gateway integration, automated clinical decisions, and automated fraud accusations are outside the current scope. Individual medical records and actual payments must not be inferred from aggregate report screens.</p>
+</section><section class="doc-section wide"><h2 id="prd-section-3"><span class="section-number">03</span><span class="section-dot"> · </span>Users and permissions</h2>
+<p>The following roles come from the intended clinic workflow. <strong>None of these permissions is currently enforced by the application.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Intended responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Owner / CEO / main administrator</td>
+<td>Authorized oversight across all six branches; users, roles, reports, alerts, audit review</td>
+</tr>
+<tr>
+<td>Pasig branch manager</td>
+<td>Pasig operations; central access only if separately authorized</td>
+</tr>
+<tr>
+<td>Other branch manager</td>
+<td>Operations and reports for the assigned branch</td>
+</tr>
+<tr>
+<td>Reception</td>
+<td>Basic registration, patient identity search, appointment creation</td>
+</tr>
+<tr>
+<td>Billing staff</td>
+<td>Services, payments, refunds, sales reporting; no medical notes</td>
+</tr>
+<tr>
+<td>Inventory staff</td>
+<td>Stock movements, requests, expiry and adjustments; no clinical records</td>
+</tr>
+<tr>
+<td>Nurse / authorized staff</td>
+<td>Minimum information required for assigned clinic service</td>
+</tr>
+<tr>
+<td>Doctor</td>
+<td>Authorized clinical history and clinical notes; billing only with separate permission</td>
+</tr>
+</tbody>
+</table>
+<p>Owner visibility of operational data does not automatically grant unrestricted access to clinical notes. Production policies must define sensitive-data access by purpose, role, resource, and branch.</p>
+</section><section class="doc-section wide"><h2 id="prd-section-4"><span class="section-number">04</span><span class="section-dot"> · </span>Current functional requirements</h2>
+<p>“Implemented” below means present in the inspected source, not deployed as a production service.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Feature</th>
+<th>Current behavior / acceptance criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>Owner navigation</td>
+<td>Five sections are reachable on mobile and desktop; inventory is reachable from relevant shortcuts</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>Branch scope</td>
+<td>Selecting a branch limits dashboard views and related totals; “All branches” restores combined scope</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>Overview</td>
+<td>Show daily visits, collections, branch summaries, and inventory attention items from sample data</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>Daily reports</td>
+<td>Select today or a past date within the picker range; view and create/edit branch reports</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>Report validation</td>
+<td>Patients are nonnegative integers; revenue/expenses are finite nonnegative numbers; notes are optional</td>
+</tr>
+<tr>
+<td>C06</td>
+<td>Report replacement</td>
+<td>Saving the same branch/date replaces its report rather than double counting it</td>
+</tr>
+<tr>
+<td>C07</td>
+<td>Statistics</td>
+<td>Switch between seven and thirty days; show visit totals, averages, comparisons, and sample staff ratings</td>
+</tr>
+<tr>
+<td>C08</td>
+<td>Revenue</td>
+<td>Switch today/seven/thirty days; show gross, expenses, net, and guarded net-margin calculation</td>
+</tr>
+<tr>
+<td>C09</td>
+<td>Branch details</td>
+<td>Show address, daily target, visits, inventory overview, trend, and sample staff information</td>
+</tr>
+<tr>
+<td>C10</td>
+<td>Inventory search</td>
+<td>Search medicine or branch text; switch all batches / needs attention</td>
+</tr>
+<tr>
+<td>C11</td>
+<td>Batch creation</td>
+<td>Require a medicine name, nonnegative integer quantity and threshold, unit, branch, and expiry</td>
+</tr>
+<tr>
+<td>C12</td>
+<td>Stock changes</td>
+<td>Add a positive whole-number restock or set a nonnegative corrected on-hand quantity</td>
+</tr>
+<tr>
+<td>C13</td>
+<td>Alerts</td>
+<td>Flag quantity at/below threshold, expired dates, and expiry within 60 days</td>
+</tr>
+<tr>
+<td>C14</td>
+<td>Responsive motion</td>
+<td>Use responsive navigation and animated tab/card/chart transitions with reduced-motion handling</td>
+</tr>
+<tr>
+<td>C15</td>
+<td>Device preview</td>
+<td>Debug starts with an iPhone 16 simulation; an opt-out flag restores host dimensions</td>
+</tr>
+</tbody>
+</table>
+<p>Batch units are vials, tablets, capsules, bottles, or boxes. The batch date picker accepts today through approximately ten years ahead. Different expiry deliveries should use separate batches.</p>
+<p>Daily reports currently contain patient count, gross revenue, operating expenses, and notes. The “Submitted” label is a stored report display state; it is not evidence of manager approval or a formal submission workflow. API saves now wait for server confirmation.</p>
+</section><section class="doc-section wide"><h2 id="prd-section-5"><span class="section-number">05</span><span class="section-dot"> · </span>Planned functional requirements</h2>
+<p>These preserve the original workflow's intended scope. P03 is partially implemented locally; production identity, policies, conflict handling, and deployment remain open.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Priority</th>
+<th>Requirement and acceptance condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P01</td>
+<td>Foundation</td>
+<td>Authenticate users; deny invalid access and record the outcome</td>
+</tr>
+<tr>
+<td>P02</td>
+<td>Foundation</td>
+<td>Enforce role, branch, module, and action checks on every server request, including direct resource access</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>Foundation</td>
+<td>Persist shared data across restarts and clients; expose failed/conflicting writes clearly</td>
+</tr>
+<tr>
+<td>P04</td>
+<td>Foundation</td>
+<td>Record logins, access requests, edits, refunds, stock adjustments/transfers, and report submissions in a restricted audit trail</td>
+</tr>
+<tr>
+<td>P05</td>
+<td>Operations</td>
+<td>Search/create centralized patient identities; reception sees basic registration only</td>
+</tr>
+<tr>
+<td>P06</td>
+<td>Operations</td>
+<td>Limit clinical records by permission; only authorized doctors edit clinical notes with history</td>
+</tr>
+<tr>
+<td>P07</td>
+<td>Operations</td>
+<td>Support cross-branch information requests, authorized review, minimal release, denial reasons, and audit records</td>
+</tr>
+<tr>
+<td>P08</td>
+<td>Operations</td>
+<td>Record QR time-in/time-out, assigned/actual branch, schedule, and attendance status</td>
+</tr>
+<tr>
+<td>P09</td>
+<td>Operations</td>
+<td>Detect doctor/appointment branch or time conflicts; notify branch and Pasig administrators and record human resolution</td>
+</tr>
+<tr>
+<td>P10</td>
+<td>Operations</td>
+<td>Record services, payments, and manager-reviewed refunds with reasons; keep billing separate from clinical notes</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>Operations</td>
+<td>Track stock-in/out, usage, adjustments, movement history, and inventory discrepancies</td>
+</tr>
+<tr>
+<td>P12</td>
+<td>Operations</td>
+<td>Approve stock transfers and update both branch inventories atomically; route unavailable stock to replenishment requests</td>
+</tr>
+<tr>
+<td>P13</td>
+<td>Operations</td>
+<td>Review and submit daily operational reports after closing, preferably after 5 PM clinic time</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>Management</td>
+<td>Consolidate reports and alerts for authorized Pasig/owner users, including attendance and scheduling conflicts</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>Management</td>
+<td>Deliver notifications through selected channels with traceable outcomes; alerts require human review</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>Management</td>
+<td>Add returning-patient/follow-up and fast-moving-supply views once underlying events exist</td>
+</tr>
+</tbody>
+</table>
+<p>P13 expands the report to include services, refunds, inventory movements, low-stock items, attendance, doctor schedule status, and appointment conflicts. A “preferably after 5 PM” process guideline is not currently a hard application cutoff.</p>
+</section><section class="doc-section wide"><h2 id="prd-section-6"><span class="section-number">06</span><span class="section-dot"> · </span>Nonfunctional requirements</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Requirement / current limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access control</td>
+<td>Must be enforced by the server; current branch selectors are display filters</td>
+</tr>
+<tr>
+<td>Durability</td>
+<td>Local API saves survive restart and can be refreshed by clients of the same server; production authorization/deployment remain planned</td>
+</tr>
+<tr>
+<td>Correctness</td>
+<td>Avoid duplicate branch/date reports; define precision, conflict, and correction rules</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>Minimize exposed fields and segregate clinical and billing access</td>
+</tr>
+<tr>
+<td>Auditability</td>
+<td>Record actor, action, scope, time, result, and meaningful change context</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>Verify contrast, keyboard operation, large text, chart alternatives, and reduced motion</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Avoid blocking interactions and unnecessary rebuilds; establish a device-based performance baseline</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Define retries, error states, backups, restore procedures, and service monitoring</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Use a consistent Philippine clinic-day policy; production timestamps need an authoritative source</td>
+</tr>
+</tbody>
+</table>
+<p>No uptime, response-time, legal-compliance, or accessibility-certification claims are established by this prototype.</p>
+</section><section class="doc-section"><h2 id="prd-section-7"><span class="section-number">07</span><span class="section-dot"> · </span>Key journeys</h2>
+<table>
+<thead>
+<tr>
+<th>Journey</th>
+<th>Expected outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Owner opens dashboard → selects Pasig</td>
+<td>Only Pasig-scoped overview data is displayed</td>
+</tr>
+<tr>
+<td>Owner edits today's branch report</td>
+<td>Dashboard totals reflect the replacement without adding a second report</td>
+</tr>
+<tr>
+<td>Reviewer opens stock alerts → restocks low batch</td>
+<td>Low-stock condition clears when quantity exceeds threshold; expiry attention can remain</td>
+</tr>
+<tr>
+<td>Reviewer adds a different-expiry delivery</td>
+<td>A new batch appears without changing the old batch's expiry</td>
+</tr>
+<tr>
+<td>Reviewer changes tabs</td>
+<td>Directional motion completes and controls remain usable</td>
+</tr>
+<tr>
+<td>Future branch employee requests another branch's records</td>
+<td>Server evaluates policy and approval; no unrestricted direct access</td>
+</tr>
+</tbody>
+</table>
+<p>Detailed steps and exceptions are in <a href="#workflow">WORKFLOW.md</a>.</p>
+</section><section class="doc-section wide"><h2 id="prd-section-8"><span class="section-number">08</span><span class="section-dot"> · </span>Success measures and acceptance</h2>
+<p>The prototype has no analytics pipeline or measured adoption baseline. Do not treat proposed measures as achieved results.</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Acceptance / evaluation method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Navigation completeness</td>
+<td>Every primary section and inventory route is reachable</td>
+</tr>
+<tr>
+<td>Calculation consistency</td>
+<td>Filtered totals agree with underlying reports and report replacement does not double count</td>
+</tr>
+<tr>
+<td>Stock behavior</td>
+<td>Restock/correction updates quantities and all relevant attention predicates</td>
+</tr>
+<tr>
+<td>Layout quality</td>
+<td>Existing widget scenarios at 320 and 1440 px pass; review iPhone layout manually</td>
+</tr>
+<tr>
+<td>Task usability</td>
+<td>Observe reviewers completing filter, report, and inventory tasks without assistance; record issues</td>
+</tr>
+<tr>
+<td>Future permission coverage</td>
+<td>Every role/branch allow/deny scenario has server/integration tests before pilot</td>
+</tr>
+<tr>
+<td>Future durability</td>
+<td>Restart and multi-client tests confirm committed data persists</td>
+</tr>
+<tr>
+<td>Future audit completeness</td>
+<td>Every defined auditable operation produces a reviewable record</td>
+</tr>
+</tbody>
+</table>
+<p>Numerical task-time and satisfaction targets should be agreed after initial user testing. The reference PRD image's generic user-growth targets do not apply to this internal clinic prototype.</p>
+</section><section class="doc-section"><h2 id="prd-section-9"><span class="section-number">09</span><span class="section-dot"> · </span>Delivery stages</h2>
+<ol>
+<li><strong>Prototype baseline — present:</strong> owner views, sample data, report/inventory forms, responsive UI, motion, Device Preview.</li>
+<li><strong>Production foundation — planned:</strong> identity, permissions, backend, persistence, audit, errors and conflict handling.</li>
+<li><strong>Branch operations — planned:</strong> patient information, billing, attendance, appointment coordination, stock movements and approvals.</li>
+<li><strong>Central monitoring — planned:</strong> complete daily reporting, notifications, returning patients/follow-ups, supply movement analysis.</li>
+</ol>
+<p>No delivery dates or backend vendors have been committed.</p>
+</section><section class="doc-section"><h2 id="prd-section-10"><span class="section-number">10</span><span class="section-dot"> · </span>Risks, assumptions, and open decisions</h2>
+<ul>
+<li>Confirm whether the public name should remain Vista Care or change to Veritas.</li>
+<li>Validate the six branch names and Pasig's central-administration responsibilities.</li>
+<li>Confirm who may approve cross-branch access, transfers, refunds, and report corrections.</li>
+<li>Select hosting, identity, storage, and notification providers before production implementation.</li>
+<li>Define report finalization, late changes, money precision, retention, and offline behavior.</li>
+<li>Validate that sample staff ratings, addresses, growth figures, and medicine quantities are replaced or clearly labeled in every demonstration.</li>
+<li>Require human review of discrepancies and conflicts; do not infer misconduct from an alert.</li>
+</ul>
+<p>Existing automated coverage is in <a href="../frontend/test/clinic_store_test.dart">store tests</a> and <a href="../frontend/test/widget_test.dart">widget tests</a>. Scope changes must update the architecture, workflow, and design documents alongside this PRD.</p>
+</section><section class="doc-section"><h2 id="prd-section-11">REST integration update - 18 October 2026</h2>
+<p>Flutter now uses Laravel REST requests by default. Branches, daily reports, and medicine batches are stored in SQLite. Confirmed saves persist; errors preserve forms; refresh reloads server state. Explicit USE_DEMO_DATA=true builds remain in-memory, including GitHub Pages. Production login, permissions, audit history, approvals, and hosted API deployment remain planned.</p>
+</section></div><footer class="doc-end"><span>VERITAS / PROJECT DOCUMENTATION</span><span>PRD.md</span></footer></article><article class="document" id="workflow" data-file="WORKFLOW.md" data-title="Clinic Workflows" style="--accent:#397ABD;--soft:#EDF5FD" hidden><div class="doc-eyebrow"><span class="doc-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="3" width="12" height="7" rx="2"/><rect x="2" y="22" width="12" height="7" rx="2"/><rect x="20" y="22" width="10" height="7" rx="2"/><path d="M16 10v6H8v6m8-6h9v6"/></g></svg></span>WORKFLOW.md<span class="doc-pill">VERITAS · PROTOTYPE 0.1</span></div><header class="intro"><h1>Clinic Workflows</h1>
+<blockquote>
+<p>Veritas Prototype 0.1 · Flutter + Laravel REST API
+Current implementation: 18 October 2026</p>
+</blockquote>
+<p>Related documents: <a href="#architecture">Architecture and API contract</a> · <a href="#readme">Setup</a> · <a href="#prd">Requirements</a></p>
+</header><div class="sections"><section class="doc-section wide"><h2 id="workflow-section-1"><span class="section-number">01</span><span class="section-dot"> · </span>Current scope</h2>
+<p>The six branches are Laguna, Pasig, Caloocan, Parañaque, Quezon City, and
+Valenzuela. Pasig remains the intended central administration hub.</p>
+<table>
+<thead>
+<tr>
+<th>Implemented locally</th>
+<th>Still planned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flutter dashboard with Laravel HTTP requests</td>
+<td>Login and server-enforced user/branch permissions</td>
+</tr>
+<tr>
+<td>Persistent daily reports</td>
+<td>Formal submission, review, approval, and correction history</td>
+</tr>
+<tr>
+<td>Persistent medicine batches and quantity changes</td>
+<td>Transfers, movement ledger, purchase requests</td>
+</tr>
+<tr>
+<td>Branch metadata and sample staff ratings</td>
+<td>User administration and live attendance</td>
+</tr>
+<tr>
+<td>Visit/revenue summaries and local stock/expiry calculations</td>
+<td>Patient records, appointments, billing transactions</td>
+</tr>
+<tr>
+<td>Loading, retry, refresh, and failed-save feedback</td>
+<td>Audit trail, delivered notifications, offline write queue</td>
+</tr>
+</tbody>
+</table>
+<p>Laravel owns the database. Flutter owns presentation, forms, navigation,
+branch display filters, and calculated dashboard summaries.</p>
+<p>The API currently has a local/testing environment restriction and no
+authenticated roles. Do not treat branch selection as authorization.</p>
+</section><section class="doc-section"><h2 id="workflow-section-2"><span class="section-number">02</span><span class="section-dot"> · </span>Prepare the local system</h2>
+<p>From the repository root:</p>
+<pre><code class="language-powershell">.\scripts\artisan.cmd migrate
+.\scripts\artisan.cmd db:seed --class=ClinicDemoSeeder
+.\scripts\artisan.cmd serve --host=127.0.0.1 --port=8000
+</code></pre>
+<p>In another terminal:</p>
+<pre><code class="language-powershell">cd frontend
+flutter pub get
+flutter run -d chrome
+</code></pre>
+<p>The explicit demo seeder creates sample branches, reports, and batches.
+Rerunning it preserves saved quantities and existing reports. Normal
+Flutter restarts fetch stored data instead of recreating it.</p>
+<p>An Android emulator uses 10.0.2.2 to reach the development computer. For
+another host use <code>--dart-define=API_BASE_URL=http://HOST:8000/api/v1</code>;
+server binding and network access must also allow that host.</p>
+</section><section class="doc-section wide"><h2 id="workflow-section-3"><span class="section-number">03</span><span class="section-dot"> · </span>Application startup and navigation</h2>
+<figure class="diagram"><a href="assets/workflow-startup.svg" target="_blank" rel="noopener"><img src="assets/workflow-startup.svg" alt="Workflow diagram" /></a><figcaption><span>VERITAS / SYSTEM DIAGRAM</span><a href="assets/workflow-startup.svg" target="_blank" rel="noopener">Open diagram ↗</a></figcaption><details><summary>View Mermaid source</summary><pre><code>flowchart TD
+    Launch[&quot;Launch Flutter&quot;] --&gt; Mode{&quot;Explicit sample-data mode?&quot;}
+    Mode -- Yes --&gt; Demo[&quot;Create in-memory demo&quot;]
+    Mode -- No --&gt; Load[&quot;GET branches, reports and medicine batches&quot;]
+    Load --&gt; Result{&quot;All requests succeed?&quot;}
+    Result -- No --&gt; Error[&quot;Show connection error and Retry&quot;]
+    Error --&gt; Load
+    Result -- Yes --&gt; Cache[&quot;Store returned records in UI cache&quot;]
+    Cache --&gt; Dashboard[&quot;Owner dashboard&quot;]
+    Demo --&gt; Dashboard
+    Dashboard --&gt; Filter[&quot;Choose branch and section&quot;]
+    Dashboard --&gt; Refresh[&quot;Refresh clinic data&quot;]
+    Refresh --&gt; Load</code></pre></details></figure>
+<ol>
+<li>Local app startup uses the Laravel API by default.</li>
+<li>Show a connecting state while loading the three resource collections.</li>
+<li>If a request fails, show an error and Retry; do not substitute demo data.</li>
+<li>If no branches exist, show an empty setup state.</li>
+<li>Once loaded, show Home, Daily reports, Statistics, Revenue, and Branches.</li>
+<li>Inventory opens through alerts, shortcuts, branch details, or the sidebar.</li>
+<li>Branch selection narrows displayed data; the API currently returns all prototype branches.</li>
+</ol>
+<p>Changing tabs preserves the existing motion and resets the shared scroll
+position to the top. Refresh fetches other users' committed changes.
+If refresh fails after a successful load, the current snapshot remains
+visible and the refresh error is reported.</p>
+</section><section class="doc-section wide"><h2 id="workflow-section-4"><span class="section-number">04</span><span class="section-dot"> · </span>Create or replace a daily report</h2>
+<ol>
+<li>Open Daily reports and choose a date; the UI allows today and the previous 365 days.</li>
+<li>Create a report or edit an existing one.</li>
+<li>Choose a branch for creation. Editing keeps its branch fixed.</li>
+<li>Enter whole-number patient count, revenue, expenses, and optional notes.</li>
+<li>Run local validation, then show a saving state with repeat submission disabled.</li>
+<li>Send PUT to <code>/api/v1/branches/{id}/reports/{YYYY-MM-DD}</code>.</li>
+<li>Laravel validates the values and report date.</li>
+<li>Persist one report for that branch/date; replace its values if it already exists.</li>
+<li>Return the stored report as JSON.</li>
+<li>Update Flutter's cache and aggregates, then close the dialog.</li>
+</ol>
+<figure class="diagram"><a href="assets/workflow-report.svg" target="_blank" rel="noopener"><img src="assets/workflow-report.svg" alt="Workflow diagram" /></a><figcaption><span>VERITAS / SYSTEM DIAGRAM</span><a href="assets/workflow-report.svg" target="_blank" rel="noopener">Open diagram ↗</a></figcaption><details><summary>View Mermaid source</summary><pre><code>sequenceDiagram
+    actor User
+    participant UI as Flutter form
+    participant API as Laravel API
+    participant DB as Database
+    User-&gt;&gt;UI: Save report
+    UI-&gt;&gt;UI: Validate and disable repeat submission
+    UI-&gt;&gt;API: PUT branch/date report JSON
+    API-&gt;&gt;API: Validate fields and date
+    API-&gt;&gt;DB: Create or update unique branch/date
+    DB--&gt;&gt;API: Stored record
+    API--&gt;&gt;UI: 200 with persisted report
+    UI-&gt;&gt;UI: Replace cache, recalculate totals, close form</code></pre></details></figure>
+<p>Patient count must be a nonnegative integer. Money must be nonnegative,
+within the supported range, and have no more than two decimal places.
+The server rejects future dates. Validation failures return 422 and keep
+the form open with entered data and an error message.</p>
+<p>The “Submitted” badge currently means a stored report exists. It does not
+mean a manager has approved it or a separate submission deadline was met.
+Refreshing/reopening the app reads the persisted report.</p>
+</section><section class="doc-section"><h2 id="workflow-section-5"><span class="section-number">05</span><span class="section-dot"> · </span>Create a medicine batch</h2>
+<ol>
+<li>Open inventory and select Add medicine.</li>
+<li>Choose branch, medicine name/strength, quantity, unit, threshold, and expiry.</li>
+<li>Validate locally; a missing expiry keeps the form open.</li>
+<li>POST to <code>/api/v1/medicine-batches</code> using the branch's database ID.</li>
+<li>Laravel validates branch existence and field values.</li>
+<li>Insert the batch and return 201 with its assigned ID.</li>
+<li>Add the returned batch to Flutter's cache and recalculate attention counts.</li>
+</ol>
+<p>Units are vials, tablets, capsules, bottles, or boxes. Quantity and threshold
+are nonnegative integers. The server rejects past expiry for new batches.
+A different-expiry delivery belongs in a separate batch.</p>
+<p>Cancelling before submission leaves data unchanged. A failed response
+retains the form; successful creation persists across app restarts.</p>
+</section><section class="doc-section wide"><h2 id="workflow-section-6"><span class="section-number">06</span><span class="section-dot"> · </span>Restock or correct inventory</h2>
+<ol>
+<li>Search medicine/branch and choose all batches or needs attention.</li>
+<li>Open Restock to add a positive quantity, or Adjust stock to set the current count.</li>
+<li>Send PATCH to <code>/api/v1/medicine-batches/{id}</code>.</li>
+<li>Laravel validates the operation and quantity.</li>
+<li>Inside a transaction, read/lock the current batch and apply the operation.</li>
+<li>Return the stored batch.</li>
+<li>Replace the cached record and recalculate alerts.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Request</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restock</td>
+<td>operation=restock; quantity=10</td>
+<td>Add 10 to current server quantity</td>
+</tr>
+<tr>
+<td>Correction</td>
+<td>operation=set; quantity=25</td>
+<td>Set on-hand quantity to 25</td>
+</tr>
+<tr>
+<td>Invalid quantity/operation</td>
+<td>Invalid JSON field values</td>
+<td>422; no committed quantity change</td>
+</tr>
+<tr>
+<td>Missing batch</td>
+<td>Unknown resource ID</td>
+<td>404; show error</td>
+</tr>
+</tbody>
+</table>
+<p>Corrections and restocks currently have no approval reason, movement
+ledger, or audit record. Restocks are transactional; stock corrections and
+report edits do not yet have version-conflict handling.</p>
+</section><section class="doc-section"><h2 id="workflow-section-7"><span class="section-number">07</span><span class="section-dot"> · </span>Alerts and totals</h2>
+<p>Flutter recalculates these values from loaded records:</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clinic day</td>
+<td>Philippine calendar date, UTC+8</td>
+</tr>
+<tr>
+<td>Low stock</td>
+<td>Quantity at or below threshold</td>
+</tr>
+<tr>
+<td>Expired</td>
+<td>Expiry before the clinic day</td>
+</tr>
+<tr>
+<td>Expiring soon</td>
+<td>Not expired and within 60 days, including today</td>
+</tr>
+<tr>
+<td>Attention</td>
+<td>Any low/expired/expiring condition</td>
+</tr>
+<tr>
+<td>Status priority</td>
+<td>Expired → Low stock → Expiring soon → Healthy</td>
+</tr>
+<tr>
+<td>Net revenue</td>
+<td>Report collections minus operating expenses</td>
+</tr>
+<tr>
+<td>Net margin</td>
+<td>Net / gross × 100; guard zero gross</td>
+</tr>
+</tbody>
+</table>
+<p>Restocking does not change expiry. A restocked batch may remain in the
+attention list because it expires soon. There is no delivered notification
+service; these are in-app operational indicators.</p>
+</section><section class="doc-section wide"><h2 id="workflow-section-8"><span class="section-number">08</span><span class="section-dot"> · </span>Errors and synchronization boundaries</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Current response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API unavailable at startup</td>
+<td>Connection screen and Retry</td>
+</tr>
+<tr>
+<td>Refresh fails</td>
+<td>Retain last snapshot and show the error</td>
+</tr>
+<tr>
+<td>Invalid form</td>
+<td>Keep entered values and display validation feedback</td>
+</tr>
+<tr>
+<td>Save pending</td>
+<td>Disable repeat submission and editing</td>
+</tr>
+<tr>
+<td>Server rejects save</td>
+<td>Keep dialog open; do not change cached records</td>
+</tr>
+<tr>
+<td>Missing resource</td>
+<td>Display the API error; refresh to retrieve current data</td>
+</tr>
+<tr>
+<td>Timeout</td>
+<td>Display error; verify server state before retrying uncertain writes</td>
+</tr>
+<tr>
+<td>Another client writes</td>
+<td>Refresh or reopen to fetch committed changes</td>
+</tr>
+<tr>
+<td>API in production environment</td>
+<td>Local-only gate returns 503</td>
+</tr>
+<tr>
+<td>Explicit demo build</td>
+<td>Use in-memory data; reset on restart/reload</td>
+</tr>
+</tbody>
+</table>
+<p>There is no automatic polling, offline write queue, websocket synchronization,
+or exactly-once retry mechanism. A timeout can occur after the server has
+committed a request. Check the resulting data before repeating batch
+creation or a restock.</p>
+</section><section class="doc-section"><h2 id="workflow-section-9"><span class="section-number">09</span><span class="section-dot"> · </span>Hosted demo versus shared backend</h2>
+<p>GitHub Pages builds with <code>USE_DEMO_DATA=true</code>; it shows the design with sample
+data and does not contact the local API. It cannot run Laravel.</p>
+<p>Groupmates can clone the repository and run their own local databases.
+Those databases are separate. To share data, clients must intentionally
+connect to the same reachable API/database; authentication and permissions
+must be implemented before public deployment.</p>
+</section><section class="doc-section wide"><h2 id="workflow-section-10"><span class="section-number">10</span><span class="section-dot"> · </span>Secure clinic workflows — planned</h2>
+<p>The original broader operating requirements remain part of the product
+direction. The REST integration above does not implement these processes.</p>
+<h3>A. Secure login and zero-trust access</h3>
+<p>Verify credentials, identity, role, assigned branch, module, resource, and
+action for every request. Deny unauthorized operations and record relevant
+access attempts. Apply minimal field access; a successful login does not
+authorize all later requests.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Intended scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Owner / CEO / authorized main administrator</td>
+<td>Authorized all-branch operations, user/role management, reporting and audit oversight</td>
+</tr>
+<tr>
+<td>Pasig manager</td>
+<td>Pasig operations; central access requires additional permission</td>
+</tr>
+<tr>
+<td>Other branch manager</td>
+<td>Assigned-branch operations and permitted approvals</td>
+</tr>
+<tr>
+<td>Reception</td>
+<td>Basic identity/registration and appointments</td>
+</tr>
+<tr>
+<td>Billing</td>
+<td>Payments, sales, refunds; no private clinical notes</td>
+</tr>
+<tr>
+<td>Inventory</td>
+<td>Stock events, transfers, expiry and history; no clinical records</td>
+</tr>
+<tr>
+<td>Nurse / authorized staff</td>
+<td>Minimum information required for assigned services</td>
+</tr>
+<tr>
+<td>Doctor</td>
+<td>Authorized clinical history and permitted clinical note changes; billing only with separate permission</td>
+</tr>
+</tbody>
+</table>
+<h3>B. Patient records and cross-branch access</h3>
+<p>Search centralized patient identities and prevent duplicates. Create or
+retrieve the identity, then apply role/branch field restrictions. Reception
+sees registration details; nurses see permitted service information; doctors
+see authorized clinical records and may make permitted note corrections.</p>
+<p>Additional cross-branch information requires a request, authorized review,
+minimal release, or a recorded denial reason. Audit relevant record access,
+changes, requests, decisions, and releases.</p>
+<h3>C. Doctor attendance and scheduling</h3>
+<p>Record QR time-in/time-out, timestamp, doctor, assigned/actual branch, and
+attendance status. Managers confirm duty branch. Compare appointment branch,
+time, assignment, and availability.</p>
+<p>Confirm compatible appointments. For conflicts, notify branch management
+and authorized Pasig administrators; human reviewers assign another doctor,
+reassign/reschedule, or notify the patient through approved staff channels.
+Record the action, reason, appointment status, and audit context.</p>
+<h3>D. Inventory transfers and replenishment</h3>
+<p>Record stock-in/out, usage, expiry, corrections, and movement history.
+Review low-stock and discrepancy alerts. If another branch can supply stock,
+submit and approve/deny a transfer; otherwise request replenishment.</p>
+<p>Fulfillment must preserve batch expiry and update both inventories atomically
+without negative available stock. Keep request, decision, movement, and
+adjustment history. An alert must never automatically accuse a person of
+fraud or misconduct.</p>
+<h3>E. Sales, billing, and refunds</h3>
+<p>Billing staff record services, payments, and branch. Refunds need a reason
+and authorized manager review. Preserve the original transaction and audit
+approval/rejection and financial changes. Billing access is separate from
+medical-note access.</p>
+<h3>F. Reviewed daily branch submission</h3>
+<p>Collect patient count, completed services, sales/payments, refunds, inventory
+movements, low stock, staff attendance, schedule status, and conflicts.
+Managers review completeness and request corrections.</p>
+<p>Submit after closing, preferably after 5 PM clinic time; persist submission
+identity/time and later corrections. The preferred time is a process
+guideline until a formal cutoff policy is agreed.</p>
+<h3>G. Pasig central monitoring</h3>
+<p>Authorized management reviews consolidated/branch reports, sales, visits,
+returning patients/follow-ups, attendance, conflicts, inventory, fast-moving
+supplies, and access/discrepancy alerts when those modules exist. Inspect
+supporting records, assign follow-up, and track resolution and audit history.</p>
+<figure class="diagram"><a href="assets/workflow-planned.svg" target="_blank" rel="noopener"><img src="assets/workflow-planned.svg" alt="Workflow diagram" /></a><figcaption><span>VERITAS / SYSTEM DIAGRAM</span><a href="assets/workflow-planned.svg" target="_blank" rel="noopener">Open diagram ↗</a></figcaption><details><summary>View Mermaid source</summary><pre><code>flowchart TD
+    Login[&quot;Authenticate user&quot;] --&gt; Policy{&quot;Authorize role, branch and action&quot;}
+    Policy -- Deny --&gt; Denial[&quot;Deny and record outcome&quot;]
+    Policy -- Allow --&gt; Operations[&quot;Permitted branch operations&quot;]
+    Operations --&gt; Review[&quot;Manager review and required approvals&quot;]
+    Review --&gt; Persist[&quot;Persist reports, events and audit history&quot;]
+    Persist --&gt; Central[&quot;Authorized Pasig / owner monitoring&quot;]
+    Central --&gt; Action[&quot;Human follow-up and resolution&quot;]</code></pre></details></figure>
+</section><section class="doc-section"><h2 id="workflow-section-11"><span class="section-number">11</span><span class="section-dot"> · </span>Verification</h2>
+<p>Existing tests cover navigation/layout, report replacement, stock attention,
+HTTP parsing, confirmed and failed saves, connection retry, API validation,
+database persistence, CORS, and local-only behavior. See
+<a href="../frontend/test/clinic_api_test.dart">Flutter API tests</a> and
+<a href="../backend/tests/Feature/ClinicApiTest.php">Laravel API tests</a>.</p>
+<p>Before production, add role/branch allow-deny coverage, clinical privacy
+tests, approvals, conflict handling, audit completeness, notification
+delivery, and durable deployment/restore checks.</p>
+</section></div><footer class="doc-end"><span>VERITAS / PROJECT DOCUMENTATION</span><span>WORKFLOW.md</span></footer></article>
+    </main>
+  </div>
+</body>
+</html>

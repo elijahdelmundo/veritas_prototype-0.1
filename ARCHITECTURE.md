@@ -1,3 +1,13 @@
+<!-- presentation:start -->
+<div align="center">
+  <img src="docs/assets/architecture-header.svg" width="100%" alt="Veritas project documentation — Architecture" />
+  <p><a href="README.md">Overview</a> &nbsp;·&nbsp; <a href="ARCHITECTURE.md">Architecture</a> &nbsp;·&nbsp; <a href="DESIGNSYSTEM.md">Design System</a> &nbsp;·&nbsp; <a href="PRD.md">Product Requirements</a> &nbsp;·&nbsp; <a href="WORKFLOW.md">Clinic Workflows</a></p>
+  <p><a href="https://elijahdelmundo.github.io/veritas_prototype-0.1/docs/#architecture">Open designed documentation ↗</a></p>
+</div>
+
+---
+<!-- presentation:end -->
+
 # Architecture
 
 > Veritas Prototype 0.1 · Vista Care clinic administration
@@ -15,6 +25,13 @@ The current integration persists branch information, daily reports, and
 medicine batches. Authentication, clinical records, billing transactions,
 approval workflows, and audit trails remain future work.
 
+<!-- presentation:start -->
+![Architecture diagram](docs/assets/architecture-flow.svg)
+
+<details>
+<summary>View Mermaid diagram source</summary>
+
+<!-- presentation:end -->
 ```mermaid
 flowchart LR
     UI["Flutter screens and forms"] --> Store["ClinicStore / ChangeNotifier"]
@@ -28,6 +45,9 @@ flowchart LR
     HTTP -- "Confirmed results" --> Store
     Store --> UI
 ```
+<!-- presentation:start -->
+</details>
+<!-- presentation:end -->
 
 The project folder is `veritas_prototype 0.1`, its Flutter package remains
 `demo_demo`, and the visible product brand is Vista Care.

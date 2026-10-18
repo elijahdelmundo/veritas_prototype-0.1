@@ -45,6 +45,11 @@ jobs:
           REPOSITORY_NAME: ${{ github.event.repository.name }}
         run: flutter build web --profile --dart-define=HOSTED_PREVIEW=true --dart-define=USE_DEMO_DATA=true --base-href "/$REPOSITORY_NAME/"
 
+      - name: Include styled documentation
+        run: |
+          mkdir -p build/web/docs
+          cp -R ../docs/. build/web/docs/
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v4
         with:
